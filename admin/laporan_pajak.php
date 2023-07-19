@@ -100,7 +100,7 @@ include 'header.php';
                                         <tr>
                                             <th width="1%">NO</th>
                                             <th>URAIAN</th>
-                                            <th>KODE BILLING</th>
+                                            <th>NO. BUKTI</th>
                                             <th>TANGGAL</th>
                                             <th>NILAI</th>
                                             <th>JENIS PAJAK</th>

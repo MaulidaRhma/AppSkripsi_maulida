@@ -7,7 +7,7 @@ include 'header.php';
 
   <section class="content-header">
     <h1>
-      LAPORAN PEMASUKAN DAN PENGELUARAN
+      LAPORAN PENDAPATAN DAN PENGELUARAN
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -19,7 +19,7 @@ include 'header.php';
     <div class="row">
       <section class="col-lg-12">
         <div class="box box-info">
-          <div class="box-header">
+          <!-- <div class="box-header">
             <h3 class="box-title">Filter Laporan</h3>
           </div>
           <div class="box-body">
@@ -56,20 +56,7 @@ include 'header.php';
                   <div class="form-group">
                     <label>Kategori</label>
                     <select name="kategori" class="form-control" required="required">
-                      <option value="semua">- Semua Kategori -</option>
-                      <?php
-                      $kategori = mysqli_query($koneksi, "SELECT * FROM kategori");
-                      while ($k = mysqli_fetch_array($kategori)) {
-                      ?>
-                        <option <?php if (isset($_GET['kategori'])) {
-                                  if ($_GET['kategori'] == $k['kategori_id']) {
-                                    echo "selected='selected'";
-                                  }
-                                } ?> value="<?php echo $k['kategori_id']; ?>"><?php echo $k['kategori']; ?></option>
-                      <?php
-                      }
-                      ?>
-                    </select>
+                
                   </div>
 
                 </div>
@@ -85,124 +72,97 @@ include 'header.php';
               </div>
             </form>
           </div>
-        </div>
+        </div> -->
 
-        <div class="box box-info">
-          <div class="box-header">
-            <h3 class="box-title">Laporan Pemasukan & Pegeluaran</h3>
-          </div>
-          <div class="box-body">
+          <div class="box box-info">
+            <div class="box-header">
+              <h3 class="box-title">Laporan Pendapatan & Pegeluaran</h3>
+            </div>
+            <div class="box-body">
 
-            <?php
-            if (isset($_GET['tanggal_sampai']) && isset($_GET['tanggal_dari']) && isset($_GET['kategori'])) {
-              $tgl_dari = $_GET['tanggal_dari'];
-              $tgl_sampai = $_GET['tanggal_sampai'];
-              $kategori = $_GET['kategori'];
-            ?>
-
-              <div class="row">
-                <div class="col-lg-6">
-                  <table class="table table-bordered">
-                    <tr>
-                      <th width="30%">DARI TANGGAL</th>
-                      <th width="1%">:</th>
-                      <td><?php echo $tgl_dari; ?></td>
-                    </tr>
-                    <tr>
-                      <th>SAMPAI TANGGAL</th>
-                      <th>:</th>
-                      <td><?php echo $tgl_sampai; ?></td>
-                    </tr>
-                    <tr>
-                      <th>KATEGORI</th>
-                      <th>:</th>
-                      <td>
-                        <?php
-                        if ($kategori == "semua") {
-                          echo "SEMUA KATEGORI";
-                        } else {
-                          $k = mysqli_query($koneksi, "select * from kategori where kategori_id='$kategori'");
-                          $kk = mysqli_fetch_assoc($k);
-                          echo $kk['kategori'];
-                        }
-                        ?>
-
-                      </td>
-                    </tr>
-                  </table>
-
-                </div>
-              </div>
-              <a href="cetak/laporan_print.php?tanggal_dari=<?php echo $tgl_dari ?>&tanggal_sampai=<?php echo $tgl_sampai ?>&kategori=<?php echo $kategori ?>" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-print"></i> &nbsp PRINT</a>
+              <a href="cetak/laporan_print.php" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-print"></i> &nbsp PRINT</a>
               <div class="table-responsive">
+                <br>
+                <h5>LAPORAN PENDAPATAN</h5>
                 <table class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th width="1%" rowspan="2">NO</th>
-                      <th width="10%" rowspan="2" class="text-center">TANGGAL</th>
-                      <th rowspan="2" class="text-center">KATEGORI</th>
-                      <th rowspan="2" class="text-center">KETERANGAN</th>
-                      <th colspan="2" class="text-center">JENIS</th>
-                    </tr>
-                    <tr>
-                      <th class="text-center">PEMASUKAN</th>
-                      <th class="text-center">PENGELUARAN</th>
+                      <th width="1%">NO</th>
+                      <th>JENIS RETRIBUSI</th>
+                      <th>KODE REKENING</th>
+                      <th>TARGET</th>
+                      <th>SALDO</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    include 'koneksi.php';
-                    $no = 1;
                     $total_pemasukan = 0;
-                    $total_pengeluaran = 0;
-                    if ($kategori == "semua") {
-                      $data = mysqli_query($koneksi, "SELECT * FROM transaksi,kategori where kategori_id=transaksi_kategori and date(transaksi_tanggal)>='$tgl_dari' and date(transaksi_tanggal)<='$tgl_sampai'");
-                    } else {
-                      $data = mysqli_query($koneksi, "SELECT * FROM transaksi,kategori where kategori_id=transaksi_kategori and kategori_id='$kategori' and date(transaksi_tanggal)>='$tgl_dari' and date(transaksi_tanggal)<='$tgl_sampai'");
-                    }
+                    include '../koneksi.php';
+                    $no = 1;
+                    $data = mysqli_query($koneksi, "SELECT * FROM jenis_retribusi");
                     while ($d = mysqli_fetch_array($data)) {
-
-                      if ($d['transaksi_jenis'] == "Pemasukan") {
-                        $total_pemasukan += $d['transaksi_nominal'];
-                      } elseif ($d['transaksi_jenis'] == "Pengeluaran") {
-                        $total_pengeluaran += $d['transaksi_nominal'];
+                      if ($d['jenis']) {
+                        $total_pemasukan += $d['saldo'];
                       }
                     ?>
                       <tr>
-                        <td class="text-center"><?php echo $no++; ?></td>
-                        <td class="text-center"><?php echo date('d-m-Y', strtotime($d['transaksi_tanggal'])); ?></td>
-                        <td><?php echo $d['kategori']; ?></td>
-                        <td><?php echo $d['transaksi_keterangan']; ?></td>
-                        <td class="text-center">
-                          <?php
-                          if ($d['transaksi_jenis'] == "Pemasukan") {
-                            echo "Rp. " . number_format($d['transaksi_nominal']) . " ,-";
-                          } else {
-                            echo "-";
-                          }
-                          ?>
-                        </td>
-                        <td class="text-center">
-                          <?php
-                          if ($d['transaksi_jenis'] == "Pengeluaran") {
-                            echo "Rp. " . number_format($d['transaksi_nominal']) . " ,-";
-                          } else {
-                            echo "-";
-                          }
-                          ?>
-                        </td>
+                        <td><?php echo $no++; ?></td>
+                        <td><?php echo $d['jenis']; ?></td>
+                        <td><?php echo $d['kode_rekening']; ?></td>
+                        <td><?php echo $d['target']; ?></td>
+                        <td class="text-center"><?php echo "Rp. " . number_format($d['saldo']); ?></td>
                       </tr>
                     <?php
                     }
                     ?>
                     <tr>
                       <th colspan="4" class="text-right">TOTAL</th>
-                      <td class="text-center text-bold text-success"><?php echo "Rp. " . number_format($total_pemasukan) . " ,-"; ?></td>
-                      <td class="text-center text-bold text-danger"><?php echo "Rp. " . number_format($total_pengeluaran) . " ,-"; ?></td>
+                      <td class="text-center text-bold text-danger"><?php echo "Rp. " . number_format($total_pemasukan) . " ,-"; ?></td>
                     </tr>
+                  </tbody>
+                </table>
+
+                <h5>LAPORAN PENGELUARAN</h5>
+                <!-- PENGELUARAN -->
+                <table class="table table-bordered table-striped">
+                  <thead>
                     <tr>
-                      <th colspan="4" class="text-right">SALDO</th>
-                      <td colspan="2" class="text-center text-bold text-white bg-primary"><?php echo "Rp. " . number_format($total_pemasukan - $total_pengeluaran) . " ,-"; ?></td>
+                      <th width="1%">NO</th>
+                      <th>NAMA</th>
+                      <th>ANGGARAN</th>
+                      <th>REALISASI</th>
+                      <th>REALISASI (%)</th>
+                      <th>SISA ANGGARAN</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $total_pemasukan1 = 0;
+                    include '../koneksi.php';
+                    $no = 1;
+                    $data = mysqli_query($koneksi, "SELECT * FROM kategori");
+                    while ($d = mysqli_fetch_array($data)) {
+                      if ($d['kategori']) {
+                        $total_pemasukan1 += $d['anggaran'];
+                        $anggaran_murni = $d['anggaran_murni'];
+                        $anggaran = $d['anggaran'];
+                      }
+                    ?>
+                      <tr>
+                        <td><?php echo $no++; ?></td>
+                        <td><?php echo $d['kategori']; ?></td>
+                        <td class="text-center"><?php echo "Rp. " . number_format($d['anggaran_murni']); ?></td>
+                        <td class="text-center"><?php echo "Rp. " . number_format($d['anggaran']); ?></td>
+                        <td class="text-center"><?php echo $realisasi_persen = ($anggaran / $anggaran_murni) * 100; ?>%</td>
+                        <td class="text-center"><?php echo "Rp. " . number_format($d['anggaran_murni'] -= $d['anggaran']); ?></td>
+                        <td>
+                      </tr>
+                    <?php
+                    }
+                    ?>
+                    <tr>
+                      <th colspan="5" class="text-right">TOTAL</th>
+                      <td class="text-center text-bold text-danger"><?php echo "Rp. " . number_format($total_pemasukan1) . " ,-"; ?></td>
                     </tr>
                   </tbody>
                 </table>
@@ -210,21 +170,8 @@ include 'header.php';
 
 
               </div>
-
-            <?php
-            } else {
-            ?>
-
-              <div class="alert alert-info text-center">
-                Silahkan Filter Laporan Terlebih Dulu.
-              </div>
-
-            <?php
-            }
-            ?>
-
+            </div>
           </div>
-        </div>
       </section>
     </div>
   </section>

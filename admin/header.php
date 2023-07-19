@@ -135,10 +135,13 @@
               </span>
             </a>
             <ul class="treeview-menu" style="display: none;">
-              <li><a href="kategori.php"><i class="fa fa-circle-o"></i> Kategori</a></li>
-              <li><a href="bank.php"><i class="fa fa-circle-o"></i> Rekening Bank</a></li>
+              <li><a href="kategori.php"><i class="fa fa-circle-o"></i> Kegiatan</a></li>
+              <!-- <li><a href="bank.php"><i class="fa fa-circle-o"></i> Rekening Bank</a></li> -->
               <li><a href="jabatan.php"><i class="fa fa-circle-o"></i> Jabatan</a></li>
+              <li><a href="golongan.php"><i class="fa fa-circle-o"></i> Golongan</a></li>
               <li><a href="jenis_pajak.php"><i class="fa fa-circle-o"></i> Jenis Pajak</a></li>
+              <li><a href="jenis_retribusi.php"><i class="fa fa-circle-o"></i> Jenis Retribusi</a></li>
+              <li><a href="akun_belanja.php"><i class="fa fa-circle-o"></i> Akun Belanja</a></li>
             </ul>
           </li>
 
@@ -152,7 +155,9 @@
               </span>
             </a>
             <ul class="treeview-menu" style="display: none;">
-              <li><a href="transaksi.php"><i class="fa fa-circle-o"></i> Data Transaksi</a></li>
+              <!-- <li><a href="transaksi.php"><i class="fa fa-circle-o"></i> Data Transaksi</a></li> -->
+              <li><a href="pengeluaran.php"><i class="fa fa-circle-o"></i> Data Pengeluaran</a></li>
+              <li><a href="pendapatan.php"><i class="fa fa-circle-o"></i> Data Pendapatan</a></li>
               <li><a href="gaji.php"><i class="fa fa-circle-o"></i> Data Gaji</a></li>
               <li><a href="pajak.php"><i class="fa fa-circle-o"></i> Data Pajak Pusat</a></li>
             </ul>
@@ -182,12 +187,13 @@
               </span>
             </a>
             <ul class="treeview-menu" style="display: none;">
-              <li><a href="laporan_pegawai.php"><i class="fa fa-circle-o"></i> Laporan Pegawai</a></li>
               <li><a href="laporan_gaji.php"><i class="fa fa-circle-o"></i> Laporan Gaji</a></li>
               <li><a href="laporan_pajak.php"><i class="fa fa-circle-o"></i> Laporan Pajak</a></li>
               <li><a href="laporan_hutang.php"><i class="fa fa-circle-o"></i> Laporan Hutang</a></li>
               <li><a href="laporan_piutang.php"><i class="fa fa-circle-o"></i> Laporan Piutang</a></li>
-              <li><a href="laporan_pemasukan.php"><i class="fa fa-circle-o"></i> Laporan Pemasukan</a></li>
+              <li><a href="laporan_rekap_pemasukan.php"><i class="fa fa-circle-o"></i> Rekap Pendapatan</a></li>
+              <li><a href="laporan_rekap_pengeluaran.php"><i class="fa fa-circle-o"></i> Rekap Pengeluaran</a></li>
+              <li><a href="laporan_pemasukan.php"><i class="fa fa-circle-o"></i> Laporan Pendapatan</a></li>
               <li><a href="laporan_pengeluaran.php"><i class="fa fa-circle-o"></i> Laporan Pengeluaran</a></li>
               <li><a href="laporan.php"><i class="fa fa-circle-o"></i> Pemasukan & Pengeluaran</a></li>
             </ul>

@@ -48,9 +48,20 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="font-weight-bold">Kode Billing</label>
-                                                <input autocomplete="off" type="text" name="billing" id="billing" required class="form-control" />
+                                                <label class="font-weight-bold">No. Bukti</label>
+                                                <select name="billing" class="form-control">
+                                                    <option value="">-- Pilih --</option>
+                                                    <?php
+
+                                                    $sql = $koneksi->query("select * from pengeluaran order by no_bukti");
+                                                    while ($data = $sql->fetch_assoc()) {
+                                                        echo "<option value='$data[no_bukti]'>$data[no_bukti]</option>";
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
+
+
 
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Tanggal</label>
@@ -93,7 +104,7 @@
                                     <tr>
                                         <th width="1%">NO</th>
                                         <th>URAIAN</th>
-                                        <th>KODE BILLING</th>
+                                        <th>NO. BUKTI</th>
                                         <th>TANGGAL</th>
                                         <th>NILAI</th>
                                         <th>JENIS PAJAK</th>
@@ -148,8 +159,20 @@
                                                                     </div>
 
                                                                     <div class="form-group" style="width:100%">
-                                                                        <label>Kode Billing</label>
-                                                                        <input type="text" name="billing" required="required" class="form-control" placeholder="Kode Billing .." value="<?php echo $d['billing']; ?>" style="width:100%">
+                                                                        <label>No. Bukti</label>
+                                                                        <select name="billing" class="form-control" style="width:100%">
+                                                                            <option value="">--Pilih--</option>
+                                                                            <?php
+                                                                            $tampil = mysqli_query($koneksi, "SELECT * FROM pengeluaran");
+                                                                            while ($row = mysqli_fetch_assoc($tampil)) {
+                                                                                if ($row['no_bukti'] == $d['billing']) {
+                                                                                    echo "<option value='$row[no_bukti]' selected>$row[no_bukti]</option>";
+                                                                                } else {
+                                                                                    echo "<option value='$row[no_bukti]'>$row[no_bukti]</option>";
+                                                                                }
+                                                                            }
+                                                                            ?>
+                                                                        </select>
                                                                     </div>
 
                                                                     <div class="form-group" style="width:100%">

@@ -92,7 +92,7 @@
     var barChartData = {
       labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
       datasets: [{
-          label: 'Pemasukan',
+          label: 'Pendapatan',
           fillColor: "rgba(51, 240, 113, 0.61)",
           strokeColor: "rgba(11, 246, 88, 0.61)",
           highlightFill: "rgba(220,220,220,0.75)",
@@ -101,7 +101,7 @@
             <?php
             for ($bulan = 1; $bulan <= 12; $bulan++) {
               $thn_ini = date('Y');
-              $pemasukan = mysqli_query($koneksi, "select sum(transaksi_nominal) as total_pemasukan from transaksi where transaksi_jenis='Pemasukan' and month(transaksi_tanggal)='$bulan' and year(transaksi_tanggal)='$thn_ini'");
+              $pemasukan = mysqli_query($koneksi, "select sum(jumlah) as total_pemasukan from pendapatan where month(tanggal)='$bulan' and year(tanggal)='$thn_ini'");
               $pem = mysqli_fetch_assoc($pemasukan);
 
               // $total = str_replace(",", "44", number_format($pem['total_pemasukan']));
@@ -125,7 +125,7 @@
             <?php
             for ($bulan = 1; $bulan <= 12; $bulan++) {
               $thn_ini = date('Y');
-              $pengeluaran = mysqli_query($koneksi, "select sum(transaksi_nominal) as total_pengeluaran from transaksi where transaksi_jenis='pengeluaran' and month(transaksi_tanggal)='$bulan' and year(transaksi_tanggal)='$thn_ini'");
+              $pengeluaran = mysqli_query($koneksi, "select sum(pengeluaran) as total_pengeluaran from pengeluaran where month(tanggal)='$bulan' and year(tanggal)='$thn_ini'");
               $peng = mysqli_fetch_assoc($pengeluaran);
 
               // $total = str_replace(",", "44", number_format($peng['total_pengeluaran']));
@@ -148,7 +148,7 @@
     var barChartData2 = {
       labels: [
         <?php
-        $tahun = mysqli_query($koneksi, "select distinct year(transaksi_tanggal) as tahun from transaksi order by year(transaksi_tanggal) asc");
+        $tahun = mysqli_query($koneksi, "select distinct year(tanggal) as tahun from pendapatan order by year(tanggal) asc");
         while ($t = mysqli_fetch_array($tahun)) {
         ?> "<?php echo $t['tahun']; ?>",
         <?php
@@ -163,10 +163,10 @@
           highlightStroke: "rgba(220,220,220,1)",
           data: [
             <?php
-            $tahun = mysqli_query($koneksi, "select distinct year(transaksi_tanggal) as tahun from transaksi order by year(transaksi_tanggal) asc");
+            $tahun = mysqli_query($koneksi, "select distinct year(tanggal) as tahun from pendapatan order by year(tanggal) asc");
             while ($t = mysqli_fetch_array($tahun)) {
               $thn = $t['tahun'];
-              $pemasukan = mysqli_query($koneksi, "select sum(transaksi_nominal) as total_pemasukan from transaksi where transaksi_jenis='Pemasukan' and year(transaksi_tanggal)='$thn'");
+              $pemasukan = mysqli_query($koneksi, "select sum(jumlah) as total_pemasukan from pendapatan where  year(tanggal)='$thn'");
               $pem = mysqli_fetch_assoc($pemasukan);
               $total = $pem['total_pemasukan'];
               if ($pem['total_pemasukan'] == "") {
@@ -186,10 +186,10 @@
           highlightStroke: "rgba(254, 29, 29, 0)",
           data: [
             <?php
-            $tahun = mysqli_query($koneksi, "select distinct year(transaksi_tanggal) as tahun from transaksi order by year(transaksi_tanggal) asc");
+            $tahun = mysqli_query($koneksi, "select distinct year(tanggal) as tahun from pengeluaran order by year(tanggal) asc");
             while ($t = mysqli_fetch_array($tahun)) {
               $thn = $t['tahun'];
-              $pemasukan = mysqli_query($koneksi, "select sum(transaksi_nominal) as total_pengeluaran from transaksi where transaksi_jenis='Pengeluaran' and year(transaksi_tanggal)='$thn'");
+              $pemasukan = mysqli_query($koneksi, "select sum(pengeluaran) as total_pengeluaran from pengeluaran where  year(tanggal)='$thn'");
               $pem = mysqli_fetch_assoc($pemasukan);
               $total = $pem['total_pengeluaran'];
               if ($pem['total_pengeluaran'] == "") {
@@ -227,15 +227,70 @@
         tooltipFillColor: "rgba(0,0,0,0.8)",
         multiTooltipTemplate: "<%= datasetLabel %> - Rp.<%= value.toLocaleString() %>,-"
       });
-
-
-
-
-
-
-
     }
   </script>
+  <script>
+    jQuery(document).ready(function($) {
+      $('#cmb_pegawai').change(function() { // Jika Select Box id provinsi dipilih
+        var tamp = $(this).val(); // Ciptakan variabel provinsi
+        $.ajax({
+          type: 'POST', // Metode pengiriman data menggunakan POST
+          url: 'get_nip.php', // File yang akan memproses data
+          data: 'tamp=' + tamp, // Data yang akan dikirim ke file pemroses
+          success: function(data) { // Jika berhasil
+            $('.tampung0').html(data); // Berikan hasil ke id kota
+          }
+
+
+        });
+      });
+    });
+  </script>
+
+  <script>
+    jQuery(document).ready(function($) {
+      $('#cmb_golongan').change(function() { // Jika Select Box id provinsi dipilih
+        var tamp = $(this).val(); // Ciptakan variabel provinsi
+        $.ajax({
+          type: 'POST', // Metode pengiriman data menggunakan POST
+          url: 'get_golongan.php', // File yang akan memproses data
+          data: 'tamp=' + tamp, // Data yang akan dikirim ke file pemroses
+          success: function(data) { // Jika berhasil
+            $('.tampung1').html(data); // Berikan hasil ke id kota
+          }
+
+
+        });
+      });
+    });
+  </script>
+
+
+  <script>
+    $(document).ready(function() { // Ketika halaman selesai di load
+      $('.input-tanggal').datepicker({
+        dateFormat: 'yy-mm-dd' // Set format tanggalnya jadi yyyy-mm-dd
+      });
+      $('#form-tanggal, #form-bulan, #form-tahun').hide(); // Sebagai default kita sembunyikan form filter tanggal, bulan & tahunnya
+      $('#filter').change(function() { // Ketika user memilih filter
+        if ($(this).val() == '1') { // Jika filter nya 1 (per tanggal)
+          $('#form-bulan, #form-tahun').hide(); // Sembunyikan form bulan dan tahun
+          $('#form-tanggal').show(); // Tampilkan form tanggal
+        } else if ($(this).val() == '2') { // Jika filter nya 2 (per bulan)
+          $('#form-tanggal').hide(); // Sembunyikan form tanggal
+          $('#form-bulan, #form-tahun').show(); // Tampilkan form bulan dan tahun
+        } else { // Jika filternya 3 (per tahun)
+          $('#form-tanggal, #form-bulan').hide(); // Sembunyikan form tanggal dan bulan
+          $('#form-tahun').show(); // Tampilkan form tahun
+        }
+        $('#form-tanggal input, #form-bulan select, #form-tahun select').val(''); // Clear data pada textbox tanggal, combobox bulan & tahun
+      })
+    })
+  </script>
+
+  <script src="../plugin/jquery-ui/jquery-ui.min.js"></script> <!-- Load file plugin js jquery-ui -->
+
+
 
   </body>
 

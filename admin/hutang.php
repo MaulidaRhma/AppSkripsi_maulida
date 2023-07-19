@@ -57,6 +57,25 @@
                         <textarea name="keterangan" class="form-control" rows="4"></textarea>
                       </div>
 
+                      <div class="form-group">
+                        <label class="font-weight-bold">Penanggungjawab</label>
+                        <select name="nama_pegawai" id="cmb_pegawai" class="form-control" onchange="updateNIP()">
+                          <option value="">-- Pilih Pegawai --</option>
+                          <?php
+                          $sql = $koneksi->query("SELECT * FROM karyawan");
+                          while ($data = $sql->fetch_assoc()) {
+                            echo "<option value='" . $data['nama_pegawai'] . "'>" . $data['nama_pegawai'] . "</option>";
+                          }
+                          ?>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="nip">NIP</label>
+                        <input type="text" id="nip" name="nip" readonly class="form-control">
+                      </div>
+
+
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -77,6 +96,8 @@
                     <th width="10%" class="text-center">TANGGAL</th>
                     <th class="text-center">KETERANGAN</th>
                     <th class="text-center">NOMINAL</th>
+                    <th class="text-center">PENANGGUNGJAWAB</th>
+                    <th class="text-center">NIP</th>
                     <th width="10%" class="text-center">OPSI</th>
                   </tr>
                 </thead>
@@ -93,6 +114,9 @@
                       <td class="text-center"><?php echo date('d-m-Y', strtotime($d['hutang_tanggal'])); ?></td>
                       <td><?php echo $d['hutang_keterangan']; ?></td>
                       <td class="text-center"><?php echo "Rp. " . number_format($d['hutang_nominal']) . " ,-"; ?></td>
+                      <td><?php echo $d['nama_pegawai']; ?></td>
+                      <td><?php echo $d['nip']; ?></td>
+
                       <td>
 
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_hutang_<?php echo $d['hutang_id'] ?>">
@@ -131,7 +155,27 @@
                                     <label>Keterangan</label>
                                     <textarea name="keterangan" style="width:100%" class="form-control" rows="4"><?php echo $d['hutang_keterangan'] ?></textarea>
                                   </div>
+                                  <div class="form-group" style="width:100%">
+                                    <label>Penanggungjawab</label>
+                                    <select name="nama_pegawai" class="form-control" id="cmb_pegawai1" class="form-control" onchange="update()" readonly style="width:100%" style="width:100%">
+                                      <option <?php echo $d['nama_pegawai'] ?>><?php echo $d['nama_pegawai'] ?></option>
+                                      <!-- <?php
+                                            $tampil = mysqli_query($koneksi, "SELECT * FROM karyawan");
+                                            while ($row = mysqli_fetch_assoc($tampil)) {
+                                              if ($row['nama_pegawai'] == $d['nama_pegawai']) {
+                                                echo "<option value='$row[nama_pegawai]' readonly selected>$row[nama_pegawai]readonly</option>";
+                                              } else {
+                                                echo "<option value='$row[nama_pegawai]' readonly>$row[nama_pegawai] readonly</option>";
+                                              }
+                                            }
+                                            ?> -->
+                                    </select>
+                                  </div>
 
+                                  <div class="form-group" style="width:100%">
+                                    <label>NIP</label>
+                                    <input type="number" id="nip" name="nip" readonly required="required" class="form-control" placeholder="NIP Pegawai .." value="<?php echo $d['nip']; ?>" style="width:100%">
+                                  </div>
 
                                 </div>
                                 <div class="modal-footer">
@@ -183,3 +227,24 @@
 
 </div>
 <?php include 'footer.php'; ?>s
+<script>
+  function updateNIP() {
+    var cmbPegawai = document.getElementById('cmb_pegawai');
+    var selectedPegawai = cmbPegawai.options[cmbPegawai.selectedIndex].value;
+
+    // Lakukan AJAX request untuk mendapatkan NIP berdasarkan pegawai yang dipilih
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'get_nip.php?pegawai=' + selectedPegawai, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          document.getElementById('nip').value = response.nip;
+        } else {
+          console.error('Terjadi kesalahan saat memperoleh NIP pegawai.');
+        }
+      }
+    };
+    xhr.send();
+  }
+</script>

@@ -47,6 +47,11 @@
                                                 <input type="text" name="nama_pajak" required="required" class="form-control" placeholder="Jenis Pajak ..">
                                             </div>
 
+                                            <div class="form-group">
+                                                <label>Pajak</label>
+                                                <input type="text" name="pajak" required="required" class="form-control" placeholder="Pajak ..">
+                                            </div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -64,6 +69,7 @@
                                     <tr>
                                         <th width="1%">NO</th>
                                         <th>JENIS PAJAK</th>
+                                        <th>PAJAK (%)</th>
                                         <th width="10%">OPSI</th>
                                     </tr>
                                 </thead>
@@ -77,6 +83,7 @@
                                         <tr>
                                             <td><?php echo $no++; ?></td>
                                             <td><?php echo $d['nama_pajak']; ?></td>
+                                            <td><?php echo $d['pajak']; ?></td>
                                             <td>
                                                 <?php
                                                 if ($d['id_pajak'] != 1) {
@@ -109,6 +116,11 @@
                                                                         <input type="hidden" name="id_pajak" required="required" class="form-control" placeholder="Jenis Pajak .." value="<?php echo $d['id_pajak']; ?>">
 
                                                                         <input type="text" name="nama_pajak" required="required" class="form-control" placeholder="Jenis Pajak .." value="<?php echo $d['nama_pajak']; ?>" style="width:100%">
+                                                                    </div>
+
+                                                                    <div class="form-group" style="width:100%">
+                                                                        <label>Jenis Pajak</label>
+                                                                        <input type="text" name="pajak" required="required" class="form-control" placeholder="Pajak .." value="<?php echo $d['pajak']; ?>" style="width:100%">
                                                                     </div>
 
                                                                 </div>

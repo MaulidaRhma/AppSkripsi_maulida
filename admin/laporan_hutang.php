@@ -99,10 +99,12 @@ include 'header.php';
                                     <thead>
                                         <tr>
                                             <th width="1%">NO</th>
-                                            <th width="10%">KODE</th>
+                                            <th width="1%">KODE</th>
                                             <th width="10%" class="text-center">TANGGAL</th>
                                             <th class="text-center">KETERANGAN</th>
                                             <th class="text-center">NOMINAL</th>
+                                            <th class="text-center">PENANGGUNGJAWAB</th>
+                                            <th class="text-center">NIP</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -122,6 +124,8 @@ include 'header.php';
                                                 <td class="text-center"><?php echo date('d-m-Y', strtotime($d['hutang_tanggal'])); ?></td>
                                                 <td><?php echo $d['hutang_keterangan']; ?></td>
                                                 <td class="text-center"><?php echo "Rp. " . number_format($d['hutang_nominal']) . " ,-"; ?></td>
+                                                <td><?php echo $d['nama_pegawai']; ?></td>
+                                                <td><?php echo $d['nip']; ?></td>
                                             </tr>
                                         <?php
                                         }

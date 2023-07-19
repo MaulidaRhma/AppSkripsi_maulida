@@ -55,6 +55,11 @@
                                                     </div>
 
                                                     <div class="form-group">
+                                                        <label class="font-weight-bold">NIK</label>
+                                                        <input autocomplete="off" type="number" name="nik" id="nik" required class="form-control" />
+                                                    </div>
+
+                                                    <div class="form-group">
                                                         <label class="font-weight-bold">Tempat</label>
                                                         <input autocomplete="off" type="text" name="tempat" id="tempat" required class="form-control" />
                                                     </div>
@@ -144,6 +149,7 @@
                                         <th width="1%">NO</th>
                                         <th>NAMA PEGAWAI</th>
                                         <th>NIP</th>
+                                        <th>NIK</th>
                                         <th>TEMPAT LAHIR</th>
                                         <th>TANGGAL LAHIR</th>
                                         <th>JABATAN</th>
@@ -166,6 +172,7 @@
                                             <td><?php echo $no++; ?></td>
                                             <td><?php echo $d['nama_pegawai']; ?></td>
                                             <td><?php echo $d['nip']; ?></td>
+                                            <td><?php echo $d['nik']; ?></td>
                                             <td><?php echo $d['tempat']; ?></td>
                                             <td><?php echo $d['tanggal_lahir']; ?></td>
                                             <td><?php echo $d['jabatan']; ?></td>
@@ -209,6 +216,11 @@
                                                                     <div class="form-group" style="width:100%">
                                                                         <label>NIP</label>
                                                                         <input type="number" name="nip" required="required" class="form-control" placeholder="NO Plat .." value="<?php echo $d['nip']; ?>" style="width:100%">
+                                                                    </div>
+
+                                                                    <div class="form-group" style="width:100%">
+                                                                        <label>NIK</label>
+                                                                        <input type="number" name="nik" required="required" class="form-control" placeholder="NIK .." value="<?php echo $d['nik']; ?>" style="width:100%">
                                                                     </div>
 
                                                                     <div class="form-group" style="width:100%">

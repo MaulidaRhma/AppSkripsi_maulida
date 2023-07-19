@@ -90,11 +90,11 @@
                     ?>
                         <tr>
                             <td><?php echo $no++; ?></td>
-                            <td><?php echo $d['nama']; ?></td>
-                            <td><?php echo $d['no_plat']; ?></td>
+                            <td><?php echo $d['uraian']; ?></td>
+                            <td><?php echo $d['billing']; ?></td>
                             <td><?php echo $d['tanggal']; ?></td>
-                            <td><?php echo number_format($d['biaya']); ?></td>
-                            <td><?php echo $d['keterangan']; ?></td>
+                            <td><?php echo number_format($d['jumlah']); ?></td>
+                            <td><?php echo $d['jpajak']; ?></td>
                         </tr>
                     <?php
                     }

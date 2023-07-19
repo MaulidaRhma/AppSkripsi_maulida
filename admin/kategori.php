@@ -4,8 +4,8 @@
 
   <section class="content-header">
     <h1>
-      Kategori
-      <small>Data kategori</small>
+      Kegiatan
+      <small>Data Kegiatan</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -19,11 +19,11 @@
         <div class="box box-info">
 
           <div class="box-header">
-            <h3 class="box-title">Kategori Transaksi Keuangan</h3>
-            <div class="btn-group pull-right">            
+            <h3 class="box-title">Kegiatan Dinas Perhubungan Tanah Laut</h3>
+            <div class="btn-group pull-right">
 
               <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal">
-                <i class="fa fa-plus"></i> &nbsp Tambah Kategori
+                <i class="fa fa-plus"></i> &nbsp Tambah Kegiatan
               </button>
             </div>
           </div>
@@ -35,7 +35,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Tambah Kegiatan</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -43,9 +43,14 @@
                     <div class="modal-body">
 
                       <div class="form-group">
-                        <label>Nama Kategori</label>
+                        <label>Nama Kegiatan</label>
                         <input type="text" name="kategori" required="required" class="form-control" placeholder="Nama Kategori ..">
                       </div>
+                      <div class="form-group">
+                        <label>Anggaran</label>
+                        <input type="text" name="anggaran_murni" required="required" class="form-control" placeholder="Anggaran Kegiatan ..">
+                      </div>
+
 
                     </div>
                     <div class="modal-footer">
@@ -63,24 +68,28 @@
                 <thead>
                   <tr>
                     <th width="1%">NO</th>
-                    <th>NAMA</th>
+                    <th>NAMA KEGIATAN</th>
+                    <th>ANGGARAN MURNI</th>
+                    <th>REALISASI</th>
                     <th width="10%">OPSI</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php 
+                  <?php
                   include '../koneksi.php';
-                  $no=1;
-                  $data = mysqli_query($koneksi,"SELECT * FROM kategori ORDER BY kategori ASC");
-                  while($d = mysqli_fetch_array($data)){
-                    ?>
+                  $no = 1;
+                  $data = mysqli_query($koneksi, "SELECT * FROM kategori ORDER BY kategori ASC");
+                  while ($d = mysqli_fetch_array($data)) {
+                  ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
                       <td><?php echo $d['kategori']; ?></td>
-                      <td>    
-                        <?php 
-                        if($d['kategori_id'] != 1){
-                          ?> 
+                      <td><?php echo number_format($d['anggaran_murni']); ?></td>
+                      <td><?php echo number_format($d['anggaran']); ?></td>
+                      <td>
+                        <?php
+                        if ($d['kategori_id'] != 1) {
+                        ?>
                           <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_kategori_<?php echo $d['kategori_id'] ?>">
                             <i class="fa fa-cog"></i>
                           </button>
@@ -88,7 +97,7 @@
                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapus_kategori_<?php echo $d['kategori_id'] ?>">
                             <i class="fa fa-trash"></i>
                           </button>
-                          <?php 
+                        <?php
                         }
                         ?>
 
@@ -97,7 +106,7 @@
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Edit Kategori</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">Edit Kegiatan</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -105,9 +114,13 @@
                                 <div class="modal-body">
 
                                   <div class="form-group" style="width:100%">
-                                    <label>Nama Kategori</label>
-                                    <input type="hidden" name="id" required="required" class="form-control" placeholder="Nama Kategori .." value="<?php echo $d['kategori_id']; ?>">
-                                    <input type="text" name="kategori" required="required" class="form-control" placeholder="Nama Kategori .." value="<?php echo $d['kategori']; ?>" style="width:100%">
+                                    <label>Nama Kegiatan</label>
+                                    <input type="hidden" name="id" required="required" class="form-control" placeholder="Nama Kegiatan .." value="<?php echo $d['kategori_id']; ?>">
+                                    <input type="text" name="kategori" required="required" class="form-control" placeholder="Nama Kegiatan .." value="<?php echo $d['kategori']; ?>" style="width:100%">
+                                  </div>
+                                  <div class="form-group" style="width:100%">
+                                    <label>Anggaran</label>
+                                    <input type="number" name="anggaran_murni" required="required" class="form-control" placeholder="Anggaran .." value="<?php echo $d['anggaran_murni']; ?>" style="width:100%">
                                   </div>
 
                                 </div>
@@ -145,7 +158,7 @@
 
                       </td>
                     </tr>
-                    <?php 
+                  <?php
                   }
                   ?>
                 </tbody>

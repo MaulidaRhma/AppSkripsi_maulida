@@ -41,13 +41,14 @@
     <br>
 
     <?php
-    if (isset($_GET['tanggal_sampai']) && isset($_GET['tanggal_dari']) && isset($_GET['kategori'])) {
-        $tgl_dari = $_GET['tanggal_dari'];
-        $tgl_sampai = $_GET['tanggal_sampai'];
-        $kategori = $_GET['kategori'];
+    // if (isset($_GET['tanggal_sampai']) && isset($_GET['tanggal_dari']) && isset($_GET['kategori'])) {
+    //     $tgl_dari = $_GET['tanggal_dari'];
+    //     $tgl_sampai = $_GET['tanggal_sampai'];
+    //     $kategori = $_GET['kategori'];
+    // 
     ?>
 
-        <div class="row">
+    <!-- <div class="row">
             <div class="col-lg-6">
                 <table border="0" cellspacing="0" width="100%" style="text-align: left;">
                     <tr>
@@ -79,97 +80,82 @@
                 </table>
 
             </div>
-        </div>
-        <br>
-        <div class="table-responsive">
-            <table border="1" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th width="1%" rowspan="2">NO</th>
-                        <th width="10%" rowspan="2" class="text-center">TANGGAL</th>
-                        <th>KATEGORI</th>
-                        <th>KETERANGAN</th>
-                        <th>PENGELUARAN</th>
-                    </tr>
+        </div> -->
+    <br>
+    <div class="table-responsive">
+        <table border="1" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th width="1%">NO</th>
+                    <th>NAMA</th>
+                    <th>ANGGARAN</th>
+                    <th>REALISASI</th>
+                    <th>REALISASI (%)</th>
+                    <th>SISA ANGGARAN</th>
+                </tr>
 
-                </thead>
-                <tbody>
-                    <?php
-                    include '../koneksi.php';
-                    $no = 1;
-                    $total_pemasukan = 0;
-                    $total_pengeluaran = 0;
-                    if ($kategori == "semua") {
-                        $data = mysqli_query($koneksi, "SELECT * FROM transaksi,kategori where transaksi_jenis='Pengeluaran' AND kategori_id=transaksi_kategori and date(transaksi_tanggal)>='$tgl_dari' and date(transaksi_tanggal)<='$tgl_sampai'");
-                    } else {
-                        $data = mysqli_query($koneksi, "SELECT * FROM transaksi,kategori where transaksi_jenis='Pengeluaran' AND kategori_id=transaksi_kategori and kategori_id='$kategori' and date(transaksi_tanggal)>='$tgl_dari' and date(transaksi_tanggal)<='$tgl_sampai'");
+            </thead>
+            <tbody>
+                <?php
+                $total_pemasukan1 = 0;
+                $total_sisa_anggaran = 0; // variabel untuk menyimpan jumlah total sisa anggaran
+                include '../koneksi.php';
+                $no = 1;
+                $data = mysqli_query($koneksi, "SELECT * FROM kategori");
+                while ($d = mysqli_fetch_array($data)) {
+                    if ($d['kategori']) {
+                        $total_pemasukan1 = $d['anggaran_murni'] - $d['anggaran'];
+                        $anggaran_murni = $d['anggaran_murni'];
+                        $anggaran = $d['anggaran'];
+                        $realisasi_persen = ($anggaran / $anggaran_murni) * 100;
+
+                        $sisa_anggaran = $anggaran_murni - $anggaran;
+                        $total_sisa_anggaran += $sisa_anggaran; // menambahkan sisa anggaran ke total
                     }
-                    while ($d = mysqli_fetch_array($data)) {
-
-                        if ($d['transaksi_jenis'] == "Pengeluaran") {
-                            $total_pengeluaran += $d['transaksi_nominal'];
-                        }
-                    ?>
-                        <tr>
-                            <td class="text-center"><?php echo $no++; ?></td>
-                            <td class="text-center"><?php echo date('d-m-Y', strtotime($d['transaksi_tanggal'])); ?></td>
-                            <td><?php echo $d['kategori']; ?></td>
-                            <td><?php echo $d['transaksi_keterangan']; ?></td>
-                            <td class="text-center">
-                                <?php
-                                if ($d['transaksi_jenis'] == "Pengeluaran") {
-                                    echo "Rp. " . number_format($d['transaksi_nominal']) . " ,-";
-                                } else {
-                                    echo "-";
-                                }
-                                ?>
-                            </td>
-                        </tr>
-                    <?php
-                    }
-                    ?>
+                ?>
                     <tr>
-                        <th colspan="4" class="text-right">TOTAL</th>
-                        <td class="text-center text-bold text-danger"><?php echo "Rp. " . number_format($total_pengeluaran) . " ,-"; ?></td>
+                        <td><?php echo $no++; ?></td>
+                        <td><?php echo $d['kategori']; ?></td>
+                        <td class="text-center"><?php echo "Rp. " . number_format($d['anggaran_murni']); ?></td>
+                        <td class="text-center"><?php echo "Rp. " . number_format($d['anggaran']); ?></td>
+                        <td class="text-center"><?php echo number_format($realisasi_persen, 2); ?>%</td>
+                        <td class="text-center"><?php echo "Rp. " . number_format($sisa_anggaran); ?></td>
                     </tr>
-                </tbody>
-            </table>
+                <?php
+                }
+                ?>
+                <tr>
+                    <th colspan="5" class="text-right">TOTAL</th>
+                    <td class="text-center text-bold text-danger"><?php echo "Rp. " . number_format($total_sisa_anggaran); ?></td>
+                </tr>
+            </tbody>
+        </table>
 
 
 
-        </div>
-        <br>
-        <br>
-        <?php
-        $sql = mysqli_query($koneksi, "SELECT * FROM tb_instansi WHERE id_instansi = '1'");
-        while ($row = mysqli_fetch_assoc($sql)) {
-        ?>
-            <div style="width:240px;float:right;">
-                Tanah Laut : <?= date('d-m-Y') ?><br>
-                <ol></ol>
-                <div style="font-weight:bold;text-align:center">
-                    KEPALA DINAS</br>
-                    PERHUBUNGAN TANAH LAUT<br />
-                    <p>&nbsp;</p>
-                    <br />
-                    <?php echo $row['kepala']; ?> <br>
-                    <?php echo $row['nip']; ?></p>
-                </div>
-            </div>
-            </div>
-        <?php } ?>
-
+    </div>
+    <br>
+    <br>
     <?php
-    } else {
+    $sql = mysqli_query($koneksi, "SELECT * FROM tb_instansi WHERE id_instansi = '1'");
+    while ($row = mysqli_fetch_assoc($sql)) {
     ?>
-
-        <div class="alert alert-info text-center">
-            Silahkan Filter Laporan Terlebih Dulu.
+        <div style="width:240px;float:right;">
+            Tanah Laut : <?= date('d-m-Y') ?><br>
+            <ol></ol>
+            <div style="font-weight:bold;text-align:center">
+                KEPALA DINAS</br>
+                PERHUBUNGAN TANAH LAUT<br />
+                <p>&nbsp;</p>
+                <br />
+                <?php echo $row['kepala']; ?> <br>
+                <?php echo $row['nip']; ?></p>
+            </div>
         </div>
+        </div>
+    <?php } ?>
 
-    <?php
-    }
-    ?>
+
 
 
     <script>

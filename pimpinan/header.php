@@ -121,12 +121,13 @@
               </span>
             </a>
             <ul class="treeview-menu" style="display: none;">
-              <li><a href="laporan_pegawai.php"><i class="fa fa-circle-o"></i> Laporan Pegawai</a></li>
               <li><a href="laporan_gaji.php"><i class="fa fa-circle-o"></i> Laporan Gaji</a></li>
               <li><a href="laporan_pajak.php"><i class="fa fa-circle-o"></i> Laporan Pajak</a></li>
               <li><a href="laporan_hutang.php"><i class="fa fa-circle-o"></i> Laporan Hutang</a></li>
               <li><a href="laporan_piutang.php"><i class="fa fa-circle-o"></i> Laporan Piutang</a></li>
-              <li><a href="laporan_pemasukan.php"><i class="fa fa-circle-o"></i> Laporan Pemasukan</a></li>
+              <li><a href="laporan_rekap_pemasukan.php"><i class="fa fa-circle-o"></i> Rekap Pendapatan</a></li>
+              <li><a href="laporan_rekap_pengeluaran.php"><i class="fa fa-circle-o"></i> Rekap Pengeluaran</a></li>
+              <li><a href="laporan_pemasukan.php"><i class="fa fa-circle-o"></i> Laporan Pendapatan</a></li>
               <li><a href="laporan_pengeluaran.php"><i class="fa fa-circle-o"></i> Laporan Pengeluaran</a></li>
               <li><a href="laporan.php"><i class="fa fa-circle-o"></i> Pemasukan & Pengeluaran</a></li>
             </ul>
