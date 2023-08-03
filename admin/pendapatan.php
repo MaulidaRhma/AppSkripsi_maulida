@@ -29,7 +29,7 @@
                     <div class="box-body">
 
                         <!-- Modal -->
-                        <form action="pendapatan_act.php" method="post">
+                        <form action="pendapatan_act.php" method="POST" enctype="multipart/form-data">
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -80,6 +80,11 @@
                                                 <input type="number" id="jumlah" name="jumlah" class="form-control">
                                             </div>
 
+                                            <div class="form-group">
+                                                <label for="berkas">File</label>
+                                                <input type="file" id="berkas" name="berkas" class="form-control">
+                                            </div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -103,6 +108,8 @@
                                         <th>KODE REKENING</th>
                                         <th>URAIAN</th>
                                         <th>JUMLAH</th>
+                                        <th>FILE</th>
+                                        <th>STATUS</th>
                                         <th width="10%">OPSI</th>
                                     </tr>
                                 </thead>
@@ -125,11 +132,21 @@
                                             <td><?php echo $d['uraian']; ?></td>
                                             <td><?php echo number_format($d['jumlah']); ?></td>
                                             <td>
+                                                <div id="portfolio">
+                                                    <div class="portfolio-item">
+                                                        <a href=berkas/pemasukan/<?= $d['berkas'] ?> class="portfolio-popup" target="_blank">
+                                                            <img src="berkas/fdp.jpg " width="50">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="btn btn-primary"><?php echo $d['status']; ?></td>
+                                            <td>
                                                 <?php
                                                 if ($d['id_pendapatan'] != 1) {
                                                 ?>
                                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#pendapatan_edit<?php echo $d['id_pendapatan'] ?>">
-                                                        <i class="fa fa-cog"></i>
+                                                        <i class="fa fa-edit"></i>
                                                     </button>
 
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#pendapatan_hapus<?php echo $d['id_pendapatan'] ?>">
@@ -139,7 +156,7 @@
                                                 }
                                                 ?>
 
-                                                <form action="pendapatan_update.php" method="post">
+                                                <form action="pendapatan_update.php" method="POST" enctype="multipart/form-data">
                                                     <div class="modal fade" id="pendapatan_edit<?php echo $d['id_pendapatan'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
@@ -154,6 +171,9 @@
                                                                     <div class="form-group" style="width:100%">
                                                                         <label>Tanggal</label>
                                                                         <input type="hidden" name="id_pendapatan" required="required" class="form-control" placeholder="Nama Pegawai .." value="<?php echo $d['id_pendapatan']; ?>">
+
+                                                                        <input type="hidden" name="berkas" required="required" class="form-control" placeholder="File .." value="<?php echo $d['berkas']; ?>">
+
 
                                                                         <input type="date" name="tanggal" style="width:100%" required="required" class="form-control" placeholder="Tanggal .." value="<?php echo $d['tanggal']; ?>">
                                                                     </div>
@@ -193,6 +213,11 @@
                                                                     <div class="form-group" style="width:100%">
                                                                         <label for="jumlah">Jumlah</label>
                                                                         <input type="number" id="jumlah" value="<?php echo $d['jumlah']; ?>" name="jumlah" style="width:100%" class="form-control">
+                                                                    </div>
+
+                                                                    <div class="form-group" style="width:100%">
+                                                                        <label for="berkas">File</label>
+                                                                        <input type="file" id="berkas" name="berkas" class="form-control" style="width:100%">
                                                                     </div>
 
 

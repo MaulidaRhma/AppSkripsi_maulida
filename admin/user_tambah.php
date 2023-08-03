@@ -41,6 +41,7 @@
                 <select class="form-control" name="level" required="required">
                   <option value=""> - Pilih Level - </option>
                   <option value="administrator"> Administrator </option>
+                  <option value="sekretaris"> Sekretaris </option>
                   <option value="pimpinan"> Pimpinan </option>
                 </select>
               </div>

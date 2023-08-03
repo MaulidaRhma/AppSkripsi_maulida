@@ -111,7 +111,20 @@
               <i class="fa fa-dashboard"></i> <span>DASHBOARD</span>
             </a>
           </li>
-
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-folder"></i>
+              <span>TRANSAKSI DATA</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu" style="display: none;">
+              <!-- <li><a href="transaksi.php"><i class="fa fa-circle-o"></i> Data Transaksi</a></li> -->
+              <li><a href="pengeluaran.php"><i class="fa fa-circle-o"></i> Data Pengeluaran</a></li>
+              <li><a href="pendapatan.php"><i class="fa fa-circle-o"></i> Data Pendapatan</a></li>
+            </ul>
+          </li>
           <li class="treeview">
             <a href="#">
               <i class="fa fa-file"></i>

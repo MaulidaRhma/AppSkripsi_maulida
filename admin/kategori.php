@@ -41,7 +41,10 @@
                       </button>
                     </div>
                     <div class="modal-body">
-
+                      <div class="form-group">
+                        <label>Kode Kegiatan</label>
+                        <input type="text" name="kode_kegiatan" required="required" class="form-control" placeholder="Kode Kegiatan ..">
+                      </div>
                       <div class="form-group">
                         <label>Nama Kegiatan</label>
                         <input type="text" name="kategori" required="required" class="form-control" placeholder="Nama Kategori ..">
@@ -68,7 +71,8 @@
                 <thead>
                   <tr>
                     <th width="1%">NO</th>
-                    <th>NAMA KEGIATAN</th>
+                    <th>KODE KEGIATAN</th>
+                    <th>NAMA</th>
                     <th>ANGGARAN MURNI</th>
                     <th>REALISASI</th>
                     <th width="10%">OPSI</th>
@@ -83,6 +87,7 @@
                   ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
+                      <td><?php echo $d['kode_kegiatan']; ?></td>
                       <td><?php echo $d['kategori']; ?></td>
                       <td><?php echo number_format($d['anggaran_murni']); ?></td>
                       <td><?php echo number_format($d['anggaran']); ?></td>
@@ -91,7 +96,7 @@
                         if ($d['kategori_id'] != 1) {
                         ?>
                           <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_kategori_<?php echo $d['kategori_id'] ?>">
-                            <i class="fa fa-cog"></i>
+                            <i class="fa fa-edit"></i>
                           </button>
 
                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapus_kategori_<?php echo $d['kategori_id'] ?>">
@@ -112,7 +117,10 @@
                                   </button>
                                 </div>
                                 <div class="modal-body">
-
+                                  <div class="form-group" style="width:100%">
+                                    <label>Kode Kegiatan</label>
+                                    <input type="text" name="kode_kegiatan" required="required" class="form-control" placeholder="Kode Kegiatan .." value="<?php echo $d['kode_kegiatan']; ?>" style="width:100%">
+                                  </div>
                                   <div class="form-group" style="width:100%">
                                     <label>Nama Kegiatan</label>
                                     <input type="hidden" name="id" required="required" class="form-control" placeholder="Nama Kegiatan .." value="<?php echo $d['kategori_id']; ?>">

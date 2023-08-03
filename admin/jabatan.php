@@ -82,7 +82,7 @@
                                                 if ($d['id_jabatan'] != 1) {
                                                 ?>
                                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_jabatan<?php echo $d['id_jabatan'] ?>">
-                                                        <i class="fa fa-cog"></i>
+                                                        <i class="fa fa-edit"></i>
                                                     </button>
 
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#jabatan_hapus<?php echo $d['id_jabatan'] ?>">

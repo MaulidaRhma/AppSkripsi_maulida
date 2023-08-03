@@ -101,7 +101,7 @@
                                                 if ($d['id_retribusi'] != 1) {
                                                 ?>
                                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_retribusi<?php echo $d['id_retribusi'] ?>">
-                                                        <i class="fa fa-cog"></i>
+                                                        <i class="fa fa-edit"></i>
                                                     </button>
 
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#jenis_retribusi_hapus<?php echo $d['id_retribusi'] ?>">

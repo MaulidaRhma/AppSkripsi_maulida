@@ -1,5 +1,6 @@
 <?php
 include 'header.php';
+$tahunDipilih = isset($_GET['tahun']) ? intval($_GET['tahun']) : date('Y');
 
 ?>
 
@@ -17,60 +18,36 @@ include 'header.php';
 
     <section class="content">
         <div class="row">
+            <!-- Tambahkan form untuk filter berdasarkan tahun -->
             <section class="col-lg-12">
-                <div class="box box-info">
-                    <!-- <div class="box-header">
-                        <h3 class="box-title">Filter Laporan</h3>
+                <form method="get" action="">
+                    <div class="form-group col-md-2">
+                        <label>Tahun</label>
+                        <select name="tahun" class="form-control" required="required">
+                            <?php
+                            // Tampilkan daftar tahun dari tahun saat ini hingga 10 tahun ke belakang
+                            for ($i = date('Y'); $i >= date('Y') - 10; $i--) {
+                                $selected = ($tahunDipilih == $i) ? 'selected="selected"' : '';
+                                echo '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
-                    <div class="box-body"> -->
-                    <form method="get" action="">
-                        <div class="row">
-                            <!-- <div class="col-md-3">
-
-                                    <div class="form-group">
-                                        <label>Mulai Tanggal</label>
-                                        <input autocomplete="off" type="text" value="<?php if (isset($_GET['tanggal_dari'])) {
-                                                                                            echo $_GET['tanggal_dari'];
-                                                                                        } else {
-                                                                                            echo "";
-                                                                                        } ?>" name="tanggal_dari" class="form-control datepicker2" placeholder="Mulai Tanggal" required="required">
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-3">
-
-                                    <div class="form-group">
-                                        <label>Sampai Tanggal</label>
-                                        <input autocomplete="off" type="text" value="<?php if (isset($_GET['tanggal_sampai'])) {
-                                                                                            echo $_GET['tanggal_sampai'];
-                                                                                        } else {
-                                                                                            echo "";
-                                                                                        } ?>" name="tanggal_sampai" class="form-control datepicker2" placeholder="Sampai Tanggal" required="required">
-                                    </div>
-
-                                </div> -->
-
-                            <!-- 
-                                <div class="col-md-3">
-
-                                    <div class="form-group">
-                                        <br />
-                                        <input type="submit" value="TAMPILKAN" class="btn btn-sm btn-primary btn-block">
-                                    </div>
-
-                                </div> -->
-                        </div>
-                    </form>
-                </div>
+                    <div class="form-group col-md-2">
+                        <br />
+                        <input type="submit" value="TAMPILKAN" class="btn btn-sm btn-primary">
+                    </div>
+                </form>
+            </section>
         </div>
 
         <div class="box box-info">
             <div class="box-header">
-                <h3 class="box-title">Laporan Pengeluaran</h3>
+                <h3 class="box-title">Laporan Pengeluaran <?php echo $tahunDipilih; ?></h3>
             </div>
             <div class="box-body">
-                <a href="cetak/laporan_pengeluaran.php" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-print"></i> &nbsp PRINT</a>
+
+                <a href="cetak/laporan_pengeluaran.php?tahun=<?php echo $tahunDipilih; ?>" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-print"></i> &nbsp CETAK</a>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -89,7 +66,7 @@ include 'header.php';
                             $total_sisa_anggaran = 0; // variabel untuk menyimpan jumlah total sisa anggaran
                             include '../koneksi.php';
                             $no = 1;
-                            $data = mysqli_query($koneksi, "SELECT * FROM kategori");
+                            $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kode_kegiatan = kategori.kode_kegiatan WHERE YEAR(tanggal) = $tahunDipilih");
                             while ($d = mysqli_fetch_array($data)) {
                                 if ($d['kategori']) {
                                     $total_pemasukan1 = $d['anggaran_murni'] - $d['anggaran'];

@@ -89,7 +89,7 @@
                                                 if ($d['id_pajak'] != 1) {
                                                 ?>
                                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_pajak<?php echo $d['id_pajak'] ?>">
-                                                        <i class="fa fa-cog"></i>
+                                                        <i class="fa fa-edit"></i>
                                                     </button>
 
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#jenis_pajak_hapus<?php echo $d['id_pajak'] ?>">

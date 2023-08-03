@@ -125,7 +125,8 @@ include 'header.php';
                                                 <td><?php echo $d['jenis']; ?></td>
                                                 <td><?php echo $d['kode_rekening']; ?></td>
                                                 <td><?php echo $d['uraian']; ?></td>
-                                                <td><?php echo number_format($d['jumlah']); ?></td>
+                                                <td><?php echo number_format($d['jumlah']);
+                                                    ?></td>
                                             </tr>
                                         <?php
                                         }

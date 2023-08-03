@@ -97,7 +97,7 @@ include 'header.php';
                                     <td><?php echo $no++; ?></td>
                                     <td><?php echo $d['jenis']; ?></td>
                                     <td><?php echo $d['kode_rekening']; ?></td>
-                                    <td><?php echo $d['target']; ?></td>
+                                    <td><?php echo "Rp. " . number_format($d['target']); ?></td>
                                     <td class="text-center"><?php echo "Rp. " . number_format($d['saldo']); ?></td>
                                     <td>
                                 </tr>

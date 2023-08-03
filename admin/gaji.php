@@ -192,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 if ($d['id_gaji'] != 1) {
                                                 ?>
                                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#gaji_edit<?php echo $d['id_gaji'] ?>">
-                                                        <i class="fa fa-cog"></i>
+                                                        <i class="fa fa-edit"></i>
                                                     </button>
 
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#gaji_hapus<?php echo $d['id_gaji'] ?>">

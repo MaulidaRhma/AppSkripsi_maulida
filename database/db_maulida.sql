@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Jul 2023 pada 07.42
+-- Waktu pembuatan: 01 Agu 2023 pada 14.01
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -185,7 +185,7 @@ CREATE TABLE `jenis_pajak` (
 INSERT INTO `jenis_pajak` (`id_pajak`, `nama_pajak`, `pajak`) VALUES
 (2, '411124-PPh Pasal 23', '2%'),
 (3, '411211-PPN (Pajak Pertambahan Nilai)', '11%'),
-(4, '411121 PPh Pasal 21', '5%'),
+(4, '411121 PPh Pasal 21', '10%'),
 (6, '411122-PPh Pasal 22', '1,5%'),
 (8, '411128-PPh Final', '20%');
 
@@ -208,8 +208,8 @@ CREATE TABLE `jenis_retribusi` (
 --
 
 INSERT INTO `jenis_retribusi` (`id_retribusi`, `jenis`, `kode_rekening`, `target`, `saldo`) VALUES
-(15, 'Retribusi Pelayanan Parkir di Tepi Jalan Umum', '4.1.02.01.04', '23200000', 0),
-(16, 'Retribusi Pengujian Kendaraan Bermotor', '4.1.02.01.06', '597272500', 510000),
+(15, 'Retribusi Pelayanan Parkir di Tepi Jalan Umum', '4.1.02.01.04', '23200000', 90000000),
+(16, 'Retribusi Pengujian Kendaraan Bermotor', '4.1.02.01.06', '597272500', 400000),
 (17, 'Retribusi Terminal', '4.1.02.02.04', '105009200', 0),
 (18, 'Retribusi Tempat Khusus Parkir', '4.1.02.02.05', '275000000', 0),
 (19, 'Barang dan Jasa', '1999181', '30000000', 0);
@@ -254,6 +254,7 @@ INSERT INTO `karyawan` (`id_pegawai`, `nama_pegawai`, `nip`, `nik`, `tempat`, `t
 
 CREATE TABLE `kategori` (
   `kategori_id` int(11) NOT NULL,
+  `kode_kegiatan` varchar(100) NOT NULL,
   `kategori` varchar(255) NOT NULL,
   `anggaran_murni` varchar(100) NOT NULL,
   `anggaran` int(100) DEFAULT NULL,
@@ -265,10 +266,10 @@ CREATE TABLE `kategori` (
 -- Dumping data untuk tabel `kategori`
 --
 
-INSERT INTO `kategori` (`kategori_id`, `kategori`, `anggaran_murni`, `anggaran`, `realisasi_persen`, `sisa_anggaran`) VALUES
-(31, 'Pelaksanaan Penatausahaan dan Pengujian/Verifikasi Keuangan SKPD', '50000000', 4000000, '', ''),
-(32, 'Penyediaan Komponen Instalasi Listrik/Penerangan Bangunan Kantor', '50000000', 0, '', ''),
-(33, 'Belanja Barang', '20000000', 1000000, '', '');
+INSERT INTO `kategori` (`kategori_id`, `kode_kegiatan`, `kategori`, `anggaran_murni`, `anggaran`, `realisasi_persen`, `sisa_anggaran`) VALUES
+(31, 'A.2', 'Pelaksanaan Penatausahaan dan Pengujian/Verifikasi Keuangan SKPD', '50000000', 440010, '', ''),
+(33, 'A.1', 'Belanja Barang', '20000000', 440010, '', ''),
+(34, 'A.3', 'Penyediaan Komponen Instalasi Listrik/Penerangan Bangunan Kantor', '50000000', 440010, '', '');
 
 -- --------------------------------------------------------
 
@@ -340,15 +341,18 @@ CREATE TABLE `pendapatan` (
   `id_retribusi` int(100) NOT NULL,
   `kode_rekening` varchar(100) NOT NULL,
   `uraian` varchar(100) NOT NULL,
-  `jumlah` int(100) NOT NULL
+  `jumlah` int(100) NOT NULL,
+  `berkas` varchar(100) NOT NULL,
+  `status` enum('Menunggu','Disetujui','','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pendapatan`
 --
 
-INSERT INTO `pendapatan` (`id_pendapatan`, `tanggal`, `no_bukti`, `id_retribusi`, `kode_rekening`, `uraian`, `jumlah`) VALUES
-(64, '2023-07-01', '001', 16, '4.1.02.01.06', 'pkb', 510000);
+INSERT INTO `pendapatan` (`id_pendapatan`, `tanggal`, `no_bukti`, `id_retribusi`, `kode_rekening`, `uraian`, `jumlah`, `berkas`, `status`) VALUES
+(69, '2023-07-25', '001/A.2/2023', 15, '4.1.02.01.04', 'apa aja', 10000000, '1.jpg', 'Disetujui'),
+(70, '2023-08-01', '001/A.2/2023', 16, '4.1.02.01.06', 'oke', 400000, 'Promo_Kunci_RING__PAS_Set_8_Pcs_622_MM__Combination_Wrench_S.jpg', 'Menunggu');
 
 -- --------------------------------------------------------
 
@@ -360,21 +364,23 @@ CREATE TABLE `pengeluaran` (
   `id_pengeluaran` int(11) NOT NULL,
   `tanggal` date NOT NULL,
   `no_bukti` varchar(100) NOT NULL,
-  `kategori_id` int(100) NOT NULL,
+  `kode_kegiatan` varchar(100) NOT NULL,
   `akun_belanja` varchar(100) NOT NULL,
   `uraian` varchar(100) NOT NULL,
   `pengeluaran` int(100) NOT NULL,
   `jpajak` text NOT NULL,
-  `pajak1` varchar(100) NOT NULL
+  `pajak1` varchar(100) NOT NULL,
+  `berkas` varchar(100) NOT NULL,
+  `status` enum('Menunggu','Disetujui','','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pengeluaran`
 --
 
-INSERT INTO `pengeluaran` (`id_pengeluaran`, `tanggal`, `no_bukti`, `kategori_id`, `akun_belanja`, `uraian`, `pengeluaran`, `jpajak`, `pajak1`) VALUES
-(29, '2023-07-02', '001', 31, 'Belanja Jasa Pelaksanaan Transaksi Keuangan', 'Perjalanan Dinas', 4000000, '411122', '20000'),
-(30, '2023-07-14', '2', 33, 'Belanja Alat/Bahan untuk Kegiatan Kantor-Alat Tulis Kantor', 'Barang ', 1000000, '411121', '10000');
+INSERT INTO `pengeluaran` (`id_pengeluaran`, `tanggal`, `no_bukti`, `kode_kegiatan`, `akun_belanja`, `uraian`, `pengeluaran`, `jpajak`, `pajak1`, `berkas`, `status`) VALUES
+(58, '2023-07-31', '001/A.2/2023', 'A.2', 'Belanja Alat/Bahan untuk Kegiatan Kantor- Kertas dan Cover', 'oke', 1000000, '411121', '20', '668544.png', 'Disetujui'),
+(59, '2023-08-01', '002/A.1/2023', 'A.1', 'Belanja Alat/Bahan untuk Kegiatan Kantor-Alat Tulis Kantor', 'oke', 60000, '411128-PPh Final', '20', 'kawin.jpg', 'Menunggu');
 
 -- --------------------------------------------------------
 
@@ -475,7 +481,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `user_nama`, `user_username`, `user_password`, `user_foto`, `user_level`) VALUES
 (1, 'Administrator', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'dishub1.png', 'administrator'),
-(4, 'Danoe Sulaiman, SH', 'Kadis', 'f984fbd6a856851e26cb3109fba5411f', '', 'pimpinan');
+(4, 'Danoe Sulaiman, SH', 'Kadis', 'f984fbd6a856851e26cb3109fba5411f', '', 'pimpinan'),
+(5, 'tegar', 'tegar', '1d31802d64bae29d88923d795fc73734', '12823235_668544.png', 'sekretaris');
 
 --
 -- Indexes for dumped tables
@@ -651,7 +658,7 @@ ALTER TABLE `karyawan`
 -- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `kategori_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `kategori_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT untuk tabel `pajak`
@@ -663,13 +670,13 @@ ALTER TABLE `pajak`
 -- AUTO_INCREMENT untuk tabel `pendapatan`
 --
 ALTER TABLE `pendapatan`
-  MODIFY `id_pendapatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id_pendapatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT untuk tabel `piutang`
@@ -693,7 +700,7 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

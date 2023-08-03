@@ -1,16 +1,26 @@
 <?php
 include 'koneksi.php';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tanggal = $_POST['tanggal'];
-    $no_bukti = $_POST['no_bukti'];
-    $id_retribusi = $_POST['id_retribusi'];
-    $kode_rekening = $_POST['kode_rekening'];
-    $uraian = $_POST['uraian'];
-    $jumlah = $_POST['jumlah'];
 
-    $query_insert = "INSERT INTO pendapatan (tanggal, no_bukti, id_retribusi, kode_rekening, uraian, jumlah) VALUES (?, ?, ?, ?, ?, ?)";
+$tanggal = $_POST['tanggal'];
+$no_bukti = $_POST['no_bukti'];
+$id_retribusi = $_POST['id_retribusi'];
+$kode_rekening = $_POST['kode_rekening'];
+$uraian = $_POST['uraian'];
+$jumlah = $_POST['jumlah'];
+
+// Proses upload berkas
+$nama_berkas = $_FILES['berkas']['name'];
+$ukuran_berkas = $_FILES['berkas']['size'];
+$tmp_berkas = $_FILES['berkas']['tmp_name'];
+$lokasi_upload = "berkas/pemasukan/"; // Ganti dengan lokasi folder upload yang sesuai di server
+
+// Jika berhasil diupload, pindahkan ke lokasi folder upload
+if (move_uploaded_file($tmp_berkas, $lokasi_upload . $nama_berkas)) {
+    // Lanjutkan dengan proses data lainnya
+    $query_insert = "INSERT INTO pendapatan (tanggal, no_bukti, id_retribusi, kode_rekening, uraian, jumlah, berkas, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt_insert = mysqli_prepare($koneksi, $query_insert);
-    mysqli_stmt_bind_param($stmt_insert, "ssisss", $tanggal, $no_bukti, $id_retribusi, $kode_rekening, $uraian, $jumlah);
+    $menunggu = "Menunggu";
+    mysqli_stmt_bind_param($stmt_insert, "ssisssss", $tanggal, $no_bukti, $id_retribusi, $kode_rekening, $uraian, $jumlah, $nama_berkas, $menunggu);
     $insert_result = mysqli_stmt_execute($stmt_insert);
 
     if ($insert_result) {
@@ -41,4 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         echo "Error inserting into pendapatan: " . mysqli_error($koneksi);
     }
+} else {
+    echo "Error uploading file: " . $_FILES['berkas']['error'];
 }

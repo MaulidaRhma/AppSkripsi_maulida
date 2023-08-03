@@ -96,14 +96,19 @@
  			<tbody>
  				<?php
 					$total_pemasukan1 = 0;
+					$total_sisa_anggaran = 0; // variabel untuk menyimpan jumlah total sisa anggaran
 					include '../koneksi.php';
 					$no = 1;
 					$data = mysqli_query($koneksi, "SELECT * FROM kategori");
 					while ($d = mysqli_fetch_array($data)) {
 						if ($d['kategori']) {
-							$total_pemasukan1 += $d['anggaran'];
+							$total_pemasukan1 = $d['anggaran_murni'] - $d['anggaran'];
 							$anggaran_murni = $d['anggaran_murni'];
 							$anggaran = $d['anggaran'];
+							$realisasi_persen = ($anggaran / $anggaran_murni) * 100;
+
+							$sisa_anggaran = $anggaran_murni - $anggaran;
+							$total_sisa_anggaran += $sisa_anggaran; // menambahkan sisa anggaran ke total
 						}
 					?>
  					<tr>
@@ -111,15 +116,15 @@
  						<td><?php echo $d['kategori']; ?></td>
  						<td class="text-center"><?php echo "Rp. " . number_format($d['anggaran_murni']); ?></td>
  						<td class="text-center"><?php echo "Rp. " . number_format($d['anggaran']); ?></td>
- 						<td class="text-center"><?php echo $realisasi_persen = ($anggaran / $anggaran_murni) * 100; ?>%</td>
- 						<td class="text-center"><?php echo "Rp. " . number_format($d['anggaran']); ?></td>
+ 						<td class="text-center"><?php echo number_format($realisasi_persen, 2); ?>%</td>
+ 						<td class="text-center"><?php echo "Rp. " . number_format($sisa_anggaran); ?></td>
  					</tr>
  				<?php
 					}
 					?>
  				<tr>
  					<th colspan="5" class="text-right">TOTAL</th>
- 					<td class="text-center text-bold text-danger"><?php echo "Rp. " . number_format($total_pemasukan1) . " ,-"; ?></td>
+ 					<td class="text-center text-bold text-danger"><?php echo "Rp. " . number_format($total_sisa_anggaran); ?></td>
  				</tr>
  			</tbody>
  		</table>

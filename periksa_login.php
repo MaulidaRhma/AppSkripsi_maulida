@@ -23,6 +23,9 @@ if ($cek > 0) {
 	} else if ($data['user_level'] == "pimpinan") {
 		$_SESSION['status'] = "pimpinan_logedin";
 		header("location:pimpinan/");
+	} else if ($data['user_level'] == "sekretaris") {
+		$_SESSION['status'] = "sekretaris_logedin";
+		header("location:sekretaris/");
 	} else {
 		header("location:index.php?alert=gagal");
 	}

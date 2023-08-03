@@ -129,7 +129,7 @@ include 'header.php';
                                                 <td><?php echo $d['uraian']; ?></td>
                                                 <td><?php echo number_format($d['pengeluaran']); ?></td>
                                                 <td><?php echo $d['jpajak']; ?></td>
-                                                <td><?php echo $d['pajak1']; ?></td>
+                                                <td><?php echo number_format($d['pajak1']); ?></td>
                                             </tr>
                                         <?php
                                         }

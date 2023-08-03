@@ -89,7 +89,7 @@
                                                 if ($d['id_akun'] != 1) {
                                                 ?>
                                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_akun<?php echo $d['id_akun'] ?>">
-                                                        <i class="fa fa-cog"></i>
+                                                        <i class="fa fa-edit"></i>
                                                     </button>
 
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#akun_belanja_hapus<?php echo $d['id_akun'] ?>">

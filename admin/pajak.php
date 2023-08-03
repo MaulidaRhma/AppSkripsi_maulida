@@ -48,7 +48,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="font-weight-bold">No. Bukti</label>
+                                                <label class="font-weight-bold">Kode Billing</label>
                                                 <select name="billing" class="form-control">
                                                     <option value="">-- Pilih --</option>
                                                     <?php
@@ -104,7 +104,7 @@
                                     <tr>
                                         <th width="1%">NO</th>
                                         <th>URAIAN</th>
-                                        <th>NO. BUKTI</th>
+                                        <th>KODE BILLING</th>
                                         <th>TANGGAL</th>
                                         <th>NILAI</th>
                                         <th>JENIS PAJAK</th>
@@ -130,7 +130,7 @@
                                                 if ($d['id_pajak'] != 1) {
                                                 ?>
                                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#pajak_edit<?php echo $d['id_pajak'] ?>">
-                                                        <i class="fa fa-cog"></i>
+                                                        <i class="fa fa-edit"></i>
                                                     </button>
 
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#pajak_hapus<?php echo $d['id_pajak'] ?>">
@@ -159,7 +159,7 @@
                                                                     </div>
 
                                                                     <div class="form-group" style="width:100%">
-                                                                        <label>No. Bukti</label>
+                                                                        <label>Kode Billing</label>
                                                                         <select name="billing" class="form-control" style="width:100%">
                                                                             <option value="">--Pilih--</option>
                                                                             <?php

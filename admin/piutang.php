@@ -58,7 +58,7 @@
                       </div>
 
                       <div class="form-group">
-                        <label class="font-weight-bold">Penerima</label>
+                        <label class="font-weight-bold">Nama Pegawai</label>
                         <select name="nama_pegawai" id="cmb_pegawai" class="form-control" onchange="updateNIP()">
                           <option value="">-- Pilih Pegawai --</option>
                           <?php
@@ -95,7 +95,7 @@
                     <th width="10%" class="text-center">TANGGAL</th>
                     <th class="text-center">KETERANGAN</th>
                     <th class="text-center">NOMINAL</th>
-                    <th class="text-center">PENERIMA</th>
+                    <th class="text-center">NAMA PEGAWAI</th>
                     <th class="text-center">NIP</th>
                     <th width="10%" class="text-center">OPSI</th>
                   </tr>
@@ -118,7 +118,7 @@
 
                       <td>
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_piutang_<?php echo $d['piutang_id'] ?>">
-                          <i class="fa fa-cog"></i>
+                          <i class="fa fa-edit"></i>
                         </button>
 
                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapus_piutang_<?php echo $d['piutang_id'] ?>">
@@ -155,7 +155,7 @@
                                   </div>
 
                                   <div class="form-group" style="width:100%">
-                                    <label>Penerima</label>
+                                    <label>Nama Pegawai</label>
                                     <select name="nama_pegawai" class="form-control" id="cmb_pegawai1" class="form-control" onchange="update()" readonly style="width:100%" style="width:100%">
                                       <option <?php echo $d['nama_pegawai'] ?>><?php echo $d['nama_pegawai'] ?></option>
                                       <!-- <?php

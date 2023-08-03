@@ -103,7 +103,7 @@
                             <td><?php echo $d['akun_belanja']; ?></td>
                             <td><?php echo $d['uraian']; ?></td>
                             <td><?php echo $d['jpajak']; ?></td>
-                            <td><?php echo $d['pajak1']; ?></td>
+                            <td><?php echo number_format($d['pajak1']); ?></td>
                             <td><?php echo "Rp. " . number_format($d['pengeluaran']); ?></td>
                         </tr>
                     <?php

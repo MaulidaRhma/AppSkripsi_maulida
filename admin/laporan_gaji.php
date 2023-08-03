@@ -80,21 +80,21 @@ include 'header.php';
                                 if ($filter == '1') { // Jika filter nya 1 (per tanggal)
                                     $tgl = date('d-m-y', strtotime($_GET['tanggal']));
                                     echo '<b>Gaji Pegawai Tanggal ' . $tgl . '</b><br /><br />';
-                                    echo '<a href="cetak/laporan_gaji.php?filter=1&tanggal=' . $_GET['tanggal'] . '">Cetak PDF</a><br /><br />';
+                                    echo '<a href="cetak/laporan_gaji.php?filter=1&tanggal=' . $_GET['tanggal'] . '" class="btn btn-primary">Cetak PDF</a><br /><br />';
                                     $query = "SELECT * FROM gaji WHERE DATE(tanggal)='" . $_GET['tanggal'] . "'"; // Tampilkan data transaksi sesuai tanggal yang diinput oleh user pada filter
                                 } else if ($filter == '2') { // Jika filter nya 2 (per bulan)
                                     $nama_bulan = array('', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
                                     echo '<b>Gaji Pegawai Bulan ' . $nama_bulan[$_GET['bulan']] . ' ' . $_GET['tahun'] . '</b><br /><br />';
-                                    echo '<a href="cetak/laporan_gaji.php?filter=2&bulan=' . $_GET['bulan'] . '&tahun=' . $_GET['tahun'] . '">Cetak PDF</a><br /><br />';
+                                    echo '<a href="cetak/laporan_gaji.php?filter=2&bulan=' . $_GET['bulan'] . '&tahun=' . $_GET['tahun'] . '" class="btn btn-primary">Cetak PDF</a><br /><br />';
                                     $query = "SELECT * FROM gaji WHERE MONTH(tanggal)='" . $_GET['bulan'] . "' AND YEAR(tanggal)='" . $_GET['tahun'] . "'"; // Tampilkan data transaksi sesuai bulan dan tahun yang diinput oleh user pada filter
                                 } else { // Jika filter nya 3 (per tahun)
                                     echo '<b>Gaji Pegawai Tahun ' . $_GET['tahun'] . '</b><br /><br />';
-                                    echo '<a href="cetak/laporan_gaji.php?filter=3&tahun=' . $_GET['tahun'] . '">Cetak PDF</a><br /><br />';
+                                    echo '<a href="cetak/laporan_gaji.php?filter=3&tahun=' . $_GET['tahun'] . '" class="btn btn-primary">Cetak PDF</a><br /><br />';
                                     $query = "SELECT * FROM gaji WHERE YEAR(tanggal)='" . $_GET['tahun'] . "'"; // Tampilkan data transaksi sesuai tahun yang diinput oleh user pada filter
                                 }
                             } else { // Jika user tidak mengklik tombol tampilkan
                                 echo '<b>Semua Gaji Pegawai </b><br /><br />';
-                                echo '<a href="cetak/laporan_gaji.php">Cetak PDF</a><br /><br />';
+                                echo '<a href="cetak/laporan_gaji.php" class="btn btn-primary">Cetak PDF</a><br /><br />';
                                 $query = "SELECT * FROM gaji ORDER BY tanggal"; // Tampilkan semua data transaksi diurutkan berdasarkan tanggal
                             }
                             ?>
@@ -146,6 +146,7 @@ include 'header.php';
                                         <?php
                                         }
                                         ?>
+                                    <?php } ?>
                                 </tbody>
                             </table>
 
@@ -157,8 +158,8 @@ include 'header.php';
                 </div>
             </section>
         </div>
-    </section>
+
 
 </div>
-<?php } ?>
+
 <?php include 'footer.php'; ?>

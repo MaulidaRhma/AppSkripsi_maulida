@@ -1,3 +1,16 @@
+<?php
+// Include file koneksi dan lakukan query untuk mendapatkan data sesuai tahun
+include '../koneksi.php';
+
+if (isset($_GET['tahun'])) {
+    $tahunDipilih = intval($_GET['tahun']);
+    $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kategori_id = kategori.kategori_id WHERE YEAR(tanggal) = $tahunDipilih");
+} else {
+    // Jika tahun tidak dipilih, kembali ke halaman sebelumnya atau berikan pesan kesalahan
+    header('Location: laporan_pengeluaran.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -101,7 +114,7 @@
                 $total_sisa_anggaran = 0; // variabel untuk menyimpan jumlah total sisa anggaran
                 include '../koneksi.php';
                 $no = 1;
-                $data = mysqli_query($koneksi, "SELECT * FROM kategori");
+                $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kode_kegiatan = kategori.kode_kegiatan WHERE YEAR(tanggal) = $tahunDipilih");
                 while ($d = mysqli_fetch_array($data)) {
                     if ($d['kategori']) {
                         $total_pemasukan1 = $d['anggaran_murni'] - $d['anggaran'];

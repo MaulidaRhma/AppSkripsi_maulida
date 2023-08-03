@@ -103,7 +103,7 @@ include 'header.php';
                                             <th width="10%" class="text-center">TANGGAL</th>
                                             <th class="text-center">KETERANGAN</th>
                                             <th class="text-center">NOMINAL</th>
-                                            <th class="text-center">PENERIMA</th>
+                                            <th class="text-center">NAMA PEGAWAI</th>
                                             <th class="text-center">NIP</th>
                                         </tr>
                                     </thead>
