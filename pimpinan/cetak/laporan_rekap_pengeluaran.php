@@ -73,9 +73,11 @@
                         <th>NO.BUKTI</th>
                         <th>KEGIATAN</th>
                         <th>AKUN BELANJA</th>
+                        <th>PENANGGUNG JAWAB</th>
                         <th>URAIAN</th>
                         <th>JENIS PAJAK</th>
-                        <th>PAJAK (%)</th>
+                        <th>NILAI</th>
+                        <th>STATUS</th>
                         <th>PENGELUARAN</th>
                     </tr>
 
@@ -86,12 +88,12 @@
                     include '../koneksi.php';
                     $no = 1;
                     if ("semua") {
-                        $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kategori_id = kategori.kategori_id where date(tanggal)>='$tgl_dari' and date(tanggal)<='$tgl_sampai'");
+                        $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kode_kegiatan = kategori.kode_kegiatan  where date(tanggal)>='$tgl_dari' and date(tanggal)<='$tgl_sampai'");
                     } else {
-                        $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kategori_id = kategori.kategori_id where date(tanggal)>='$tgl_dari' and date(tanggal)<='$tgl_sampai'");
+                        $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kode_kegiatan = kategori.kode_kegiatan where date(tanggal)>='$tgl_dari' and date(tanggal)<='$tgl_sampai'");
                     }
                     while ($d = mysqli_fetch_array($data)) {
-                        $total_pemasukan1 += $d['anggaran'];
+                        $total_pemasukan1 += $d['pengeluaran'];
                         $anggaran_murni = $d['anggaran_murni'];
                         $anggaran = $d['anggaran'];
                     ?>
@@ -101,16 +103,18 @@
                             <td><?php echo $d['no_bukti']; ?></td>
                             <td><?php echo $d['kategori']; ?></td>
                             <td><?php echo $d['akun_belanja']; ?></td>
+                            <td><?php echo $d['tanggung_jawab']; ?></td>
                             <td><?php echo $d['uraian']; ?></td>
                             <td><?php echo $d['jpajak']; ?></td>
-                            <td><?php echo number_format($d['pajak1']); ?></td>
-                            <td><?php echo "Rp. " . number_format($d['pengeluaran']); ?></td>
+                            <td><?php echo $d['pajak1']; ?></td>
+                            <td class="btn btn-primary"><?php echo $d['status']; ?></td>
+                            <td><?php echo number_format($d['pengeluaran']); ?></td>
                         </tr>
                     <?php
                     }
                     ?>
                     <tr>
-                        <th colspan="8" class="text-right">TOTAL</th>
+                        <th colspan="10" class="text-right">TOTAL</th>
                         <td class="text-center text-bold text-danger"><b><?php echo "Rp. " . number_format($total_pemasukan1) . " ,-"; ?></b></td>
                     </tr>
                 </tbody>

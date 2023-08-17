@@ -114,11 +114,11 @@
           <div class="inner">
             <?php
             $bulan = date('m');
-            $pengeluaran = mysqli_query($koneksi, "SELECT sum(jumlah) as total_pengeluaran FROM pendapatan");
+            $pengeluaran = mysqli_query($koneksi, "SELECT sum(target) as target FROM jenis_retribusi");
             $p = mysqli_fetch_assoc($pengeluaran);
             ?>
 
-            <h4 style="font-weight: bolder"><?php echo "Rp. " . number_format($p['total_pengeluaran']) . " ,-" ?></h4>
+            <h4 style="font-weight: bolder"><?php echo "Rp. " . number_format($p['target']) . " ,-" ?></h4>
             <p>Anggaran Pendapatan</p>
           </div>
           <div class="icon">

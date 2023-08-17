@@ -48,7 +48,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="font-weight-bold">Kode Billing</label>
+                                                <label class="font-weight-bold">No Bukti</label>
                                                 <select name="billing" class="form-control">
                                                     <option value="">-- Pilih --</option>
                                                     <?php
@@ -104,7 +104,7 @@
                                     <tr>
                                         <th width="1%">NO</th>
                                         <th>URAIAN</th>
-                                        <th>KODE BILLING</th>
+                                        <th>NOMOR BUKTI</th>
                                         <th>TANGGAL</th>
                                         <th>NILAI</th>
                                         <th>JENIS PAJAK</th>
@@ -159,7 +159,7 @@
                                                                     </div>
 
                                                                     <div class="form-group" style="width:100%">
-                                                                        <label>Kode Billing</label>
+                                                                        <label>No Bukti</label>
                                                                         <select name="billing" class="form-control" style="width:100%">
                                                                             <option value="">--Pilih--</option>
                                                                             <?php

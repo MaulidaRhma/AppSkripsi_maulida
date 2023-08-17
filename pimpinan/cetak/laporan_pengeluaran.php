@@ -114,7 +114,9 @@ if (isset($_GET['tahun'])) {
                 $total_sisa_anggaran = 0; // variabel untuk menyimpan jumlah total sisa anggaran
                 include '../koneksi.php';
                 $no = 1;
-                $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kode_kegiatan = kategori.kode_kegiatan WHERE YEAR(tanggal) = $tahunDipilih");
+                $data = mysqli_query($koneksi, "SELECT p.*, k.* FROM pengeluaran p INNER JOIN kategori k ON p.kode_kegiatan = k.kode_kegiatan WHERE YEAR(p.tanggal) = $tahunDipilih GROUP BY p.kode_kegiatan");
+
+
                 while ($d = mysqli_fetch_array($data)) {
                     if ($d['kategori']) {
                         $total_pemasukan1 = $d['anggaran_murni'] - $d['anggaran'];

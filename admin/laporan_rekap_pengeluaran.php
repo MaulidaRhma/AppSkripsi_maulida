@@ -103,10 +103,13 @@ include 'header.php';
                                             <th>NO.BUKTI</th>
                                             <th>KEGIATAN</th>
                                             <th>AKUN BELANJA</th>
+                                            <th>PENANGGUNG JAWAB</th>
                                             <th>URAIAN</th>
                                             <th>PENGELUARAN</th>
                                             <th>JENIS PAJAK</th>
-                                            <th>PAJAK (%)</th>
+                                            <th>NILAI</th>
+                                            <th>FILE</th>
+                                            <th>STATUS</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -114,9 +117,9 @@ include 'header.php';
                                         include 'koneksi.php';
                                         $no = 1;
                                         if ("semua") {
-                                            $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kategori_id = kategori.kategori_id where date(tanggal)>='$tgl_dari' and date(tanggal)<='$tgl_sampai'");
+                                            $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kode_kegiatan = kategori.kode_kegiatan where date(tanggal)>='$tgl_dari' and date(tanggal)<='$tgl_sampai'");
                                         } else {
-                                            $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kategori_id = kategori.kategori_id where date(tanggal)>='$tgl_dari' and date(tanggal)<='$tgl_sampai'");
+                                            $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kode_kegiatan = kategori.kode_kegiatan where date(tanggal)>='$tgl_dari' and date(tanggal)<='$tgl_sampai'");
                                         }
                                         while ($d = mysqli_fetch_array($data)) {
                                         ?>
@@ -126,10 +129,21 @@ include 'header.php';
                                                 <td><?php echo $d['no_bukti']; ?></td>
                                                 <td><?php echo $d['kategori']; ?></td>
                                                 <td><?php echo $d['akun_belanja']; ?></td>
+                                                <td><?php echo $d['tanggung_jawab']; ?></td>
                                                 <td><?php echo $d['uraian']; ?></td>
                                                 <td><?php echo number_format($d['pengeluaran']); ?></td>
                                                 <td><?php echo $d['jpajak']; ?></td>
-                                                <td><?php echo number_format($d['pajak1']); ?></td>
+                                                <td><?php echo $d['pajak1']; ?></td>
+                                                <td>
+                                                    <div id="portfolio">
+                                                        <div class="portfolio-item">
+                                                            <a href=berkas/pengeluaran/<?= $d['berkas'] ?> class="portfolio-popup" target="_blank">
+                                                                <img src="berkas/fdp.jpg " width="50">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="btn btn-primary"><?php echo $d['status']; ?></td>
                                             </tr>
                                         <?php
                                         }

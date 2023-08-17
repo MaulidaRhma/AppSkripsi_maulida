@@ -6,10 +6,42 @@ $tanggal = $_POST['tanggal'];
 $no_bukti = $_POST['no_bukti'];
 $kode_kegiatan = $_POST['kode_kegiatan'];
 $akun_belanja = $_POST['akun_belanja'];
+$tanggung_jawab = $_POST['tanggung_jawab'];
 $uraian = $_POST['uraian'];
 $pengeluaran = $_POST['pengeluaran'];
 $jpajak = $_POST['jpajak'];
 $pajak1 = $_POST['pajak1'];
+
+
+// Penanganan unggahan file
+$file_upload = $_FILES['berkas']['name'];
+$tmp_file = $_FILES['berkas']['tmp_name'];
+$upload_dir = 'berkas/pemasukan/'; // Direktori tempat Anda ingin menyimpan file yang diunggah
+$target_file = $upload_dir . basename($file_upload);
+$upload_ok = true;
+$file_extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+// Periksa apakah file yang diunggah adalah gambar atau bukan
+if (!getimagesize($tmp_file)) {
+    echo "Error: Hanya diperbolehkan mengunggah gambar.";
+    $upload_ok = false;
+}
+
+// Batasi ukuran file yang diunggah (contoh: maksimal 5 MB)
+$max_file_size = 5 * 1024 * 1024; // 5 MB
+if ($_FILES['berkas']['size'] > $max_file_size) {
+    echo "Error: Ukuran file terlalu besar. Maksimal 5 MB.";
+    $upload_ok = false;
+}
+
+// Batasi jenis file yang diunggah (contoh: hanya diperbolehkan JPG, JPEG, PNG)
+$allowed_extensions = array('jpg', 'jpeg', 'png');
+if (!in_array($file_extension, $allowed_extensions)) {
+    echo "Error: Jenis file tidak diperbolehkan. Hanya diperbolehkan JPG, JPEG, dan PNG.";
+    $upload_ok = false;
+}
+
+
 
 // Get the current expense details
 $query_select = "SELECT kode_kegiatan, pengeluaran FROM pengeluaran WHERE id_pengeluaran = ?";
@@ -26,7 +58,7 @@ mysqli_stmt_close($stmt_select);
 $difference = $pengeluaran - $current_pengeluaran;
 
 // Update the expense details
-$update_result = mysqli_query($koneksi, "UPDATE pengeluaran SET tanggal='$tanggal', no_bukti='$no_bukti', kode_kegiatan='$kode_kegiatan', akun_belanja='$akun_belanja', uraian='$uraian', pengeluaran='$pengeluaran', jpajak='$jpajak', pajak1='$pajak1' WHERE id_pengeluaran='$id_pengeluaran'");
+$update_result = mysqli_query($koneksi, "UPDATE pengeluaran SET tanggal='$tanggal', no_bukti='$no_bukti', kode_kegiatan='$kode_kegiatan', akun_belanja='$akun_belanja',tanggung_jawab='$tanggung_jawab', uraian='$uraian', pengeluaran='$pengeluaran', jpajak='$jpajak', pajak1='$pajak1', berkas='$file_upload' WHERE id_pengeluaran='$id_pengeluaran'");
 
 if ($update_result) {
     // Update the budget in the corresponding category

@@ -5,6 +5,7 @@ $tanggal = $_POST['tanggal'];
 $no_bukti = $_POST['no_bukti'];
 $kode_kegiatan = $_POST['kode_kegiatan'];
 $akun_belanja = $_POST['akun_belanja'];
+$tanggung_jawab = $_POST['tanggung_jawab'];
 $uraian = $_POST['uraian'];
 $pengeluaran = $_POST['pengeluaran'];
 $jpajak = $_POST['jpajak'];
@@ -19,10 +20,10 @@ $lokasi_upload = "berkas/pengeluaran/"; // Ganti dengan lokasi folder upload yan
 // Jika berhasil diupload, pindahkan ke lokasi folder upload
 if (move_uploaded_file($tmp_berkas, $lokasi_upload . $nama_berkas)) {
     // Lanjutkan dengan proses data lainnya
-    $query_insert = "INSERT INTO pengeluaran (tanggal, no_bukti, kode_kegiatan, akun_belanja, uraian, pengeluaran, jpajak, pajak1, berkas,status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+    $query_insert = "INSERT INTO pengeluaran (tanggal, no_bukti, kode_kegiatan, akun_belanja,tanggung_jawab, uraian, pengeluaran, jpajak, pajak1, berkas,status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
     $stmt_insert = mysqli_prepare($koneksi, $query_insert);
     $menunggu = "Menunggu";
-    mysqli_stmt_bind_param($stmt_insert, "sssssdssss", $tanggal, $no_bukti, $kode_kegiatan, $akun_belanja, $uraian, $pengeluaran, $jpajak, $pajak1, $nama_berkas, $menunggu);
+    mysqli_stmt_bind_param($stmt_insert, "sssssssssss", $tanggal, $no_bukti, $kode_kegiatan, $akun_belanja, $tanggung_jawab, $uraian, $pengeluaran, $jpajak, $pajak1, $nama_berkas, $menunggu);
     $insert_result = mysqli_stmt_execute($stmt_insert);
 
     if ($insert_result) {

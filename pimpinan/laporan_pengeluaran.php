@@ -25,8 +25,8 @@ $tahunDipilih = isset($_GET['tahun']) ? intval($_GET['tahun']) : date('Y');
                         <label>Tahun</label>
                         <select name="tahun" class="form-control" required="required">
                             <?php
-                            // Tampilkan daftar tahun dari tahun saat ini hingga 10 tahun ke belakang
-                            for ($i = date('Y'); $i >= date('Y') - 10; $i--) {
+                            // Tampilkan daftar tahun dari tahun saat ini hingga 10 tahun ke depan
+                            for ($i = date('Y'); $i <= date('Y') + 10; $i++) {
                                 $selected = ($tahunDipilih == $i) ? 'selected="selected"' : '';
                                 echo '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>';
                             }
@@ -66,7 +66,10 @@ $tahunDipilih = isset($_GET['tahun']) ? intval($_GET['tahun']) : date('Y');
                             $total_sisa_anggaran = 0; // variabel untuk menyimpan jumlah total sisa anggaran
                             include '../koneksi.php';
                             $no = 1;
-                            $data = mysqli_query($koneksi, "SELECT * FROM pengeluaran INNER JOIN kategori ON pengeluaran.kode_kegiatan = kategori.kode_kegiatan WHERE YEAR(tanggal) = $tahunDipilih");
+                            $data = mysqli_query($koneksi, "SELECT p.*, k.* FROM pengeluaran p INNER JOIN kategori k ON p.kode_kegiatan = k.kode_kegiatan WHERE YEAR(p.tanggal) = $tahunDipilih GROUP BY p.kode_kegiatan");
+
+
+
                             while ($d = mysqli_fetch_array($data)) {
                                 if ($d['kategori']) {
                                     $total_pemasukan1 = $d['anggaran_murni'] - $d['anggaran'];

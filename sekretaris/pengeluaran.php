@@ -145,6 +145,7 @@
                                         <th>NO.BUKTI</th>
                                         <th>KEGIATAN</th>
                                         <th>AKUN BELANJA</th>
+                                        <th>PENANGGUNG JAWAB</th>
                                         <th>URAIAN</th>
                                         <th>PENGELUARAN</th>
                                         <th>JENIS PAJAK</th>
@@ -167,10 +168,11 @@
                                             <td><?php echo $d['no_bukti']; ?></td>
                                             <td><?php echo $d['kategori']; ?></td>
                                             <td><?php echo $d['akun_belanja']; ?></td>
+                                            <td><?php echo $d['tanggung_jawab']; ?></td>
                                             <td><?php echo $d['uraian']; ?></td>
                                             <td><?php echo number_format($d['pengeluaran']); ?></td>
                                             <td><?php echo $d['jpajak']; ?></td>
-                                            <td><?php echo number_format($d['pajak1']); ?></td>
+                                            <td><?php echo $d['pajak1']; ?></td>
                                             <td>
                                                 <div id="portfolio">
                                                     <div class="portfolio-item">

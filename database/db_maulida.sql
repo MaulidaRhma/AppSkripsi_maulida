@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Agu 2023 pada 14.01
+-- Waktu pembuatan: 03 Agu 2023 pada 13.09
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -267,9 +267,9 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`kategori_id`, `kode_kegiatan`, `kategori`, `anggaran_murni`, `anggaran`, `realisasi_persen`, `sisa_anggaran`) VALUES
-(31, 'A.2', 'Pelaksanaan Penatausahaan dan Pengujian/Verifikasi Keuangan SKPD', '50000000', 440010, '', ''),
-(33, 'A.1', 'Belanja Barang', '20000000', 440010, '', ''),
-(34, 'A.3', 'Penyediaan Komponen Instalasi Listrik/Penerangan Bangunan Kantor', '50000000', 440010, '', '');
+(31, 'A.2', 'Pelaksanaan Penatausahaan dan Pengujian/Verifikasi Keuangan SKPD', '50000000', 440667, '', ''),
+(33, 'A.1', 'Belanja Barang', '20000000', 449667, '', ''),
+(34, 'A.3', 'Penyediaan Komponen Instalasi Listrik/Penerangan Bangunan Kantor', '50000000', 449667, '', '');
 
 -- --------------------------------------------------------
 
@@ -366,6 +366,7 @@ CREATE TABLE `pengeluaran` (
   `no_bukti` varchar(100) NOT NULL,
   `kode_kegiatan` varchar(100) NOT NULL,
   `akun_belanja` varchar(100) NOT NULL,
+  `tanggung_jawab` varchar(100) NOT NULL,
   `uraian` varchar(100) NOT NULL,
   `pengeluaran` int(100) NOT NULL,
   `jpajak` text NOT NULL,
@@ -378,9 +379,12 @@ CREATE TABLE `pengeluaran` (
 -- Dumping data untuk tabel `pengeluaran`
 --
 
-INSERT INTO `pengeluaran` (`id_pengeluaran`, `tanggal`, `no_bukti`, `kode_kegiatan`, `akun_belanja`, `uraian`, `pengeluaran`, `jpajak`, `pajak1`, `berkas`, `status`) VALUES
-(58, '2023-07-31', '001/A.2/2023', 'A.2', 'Belanja Alat/Bahan untuk Kegiatan Kantor- Kertas dan Cover', 'oke', 1000000, '411121', '20', '668544.png', 'Disetujui'),
-(59, '2023-08-01', '002/A.1/2023', 'A.1', 'Belanja Alat/Bahan untuk Kegiatan Kantor-Alat Tulis Kantor', 'oke', 60000, '411128-PPh Final', '20', 'kawin.jpg', 'Menunggu');
+INSERT INTO `pengeluaran` (`id_pengeluaran`, `tanggal`, `no_bukti`, `kode_kegiatan`, `akun_belanja`, `tanggung_jawab`, `uraian`, `pengeluaran`, `jpajak`, `pajak1`, `berkas`, `status`) VALUES
+(58, '2023-07-31', '001/A.2/2023', 'A.2', 'Belanja Alat/Bahan untuk Kegiatan Kantor- Kertas dan Cover', 'Tedy Mulyana, ST.MT', 'oke', 1000000, '411121 PPh Pasal 21', '20', '668544.png', 'Disetujui'),
+(59, '2023-08-01', '002/A.1/2023', 'A.1', 'Belanja Alat/Bahan untuk Kegiatan Kantor-Alat Tulis Kantor', 'Andri Triyanto C, LLASDP', 'oke', 60000, '411128-PPh Final', '20', 'kawin.jpg', 'Menunggu'),
+(63, '2023-08-03', '003/A.3/2023', 'A.3', 'Belanja Alat/Bahan untuk Kegiatan Kantor- Kertas dan Cover', 'Harni Rahayu, S.IKom', 'mantap guys', 10000, '411121 PPh Pasal 21', '', '1.jpg', 'Menunggu'),
+(64, '2023-08-03', '004/A.2/2023', 'A.2', 'Belanja Alat/Bahan untuk Kegiatan Kantor-Alat Tulis Kantor', 'Tedy Mulyana, ST.MT', 'iya', 1000, '411121 PPh Pasal 21', '90', '1.jpg', 'Menunggu'),
+(65, '2023-08-04', '005/A.1/2023', 'A.1', 'Belanja Alat/Bahan untuk Kegiatan Kantor- Kertas dan Cover', 'Andri Triyanto C, LLASDP', 'mantap guys', 10000, '411122-PPh Pasal 22', '', '1.jpg', 'Menunggu');
 
 -- --------------------------------------------------------
 
@@ -676,7 +680,7 @@ ALTER TABLE `pendapatan`
 -- AUTO_INCREMENT untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT untuk tabel `piutang`
